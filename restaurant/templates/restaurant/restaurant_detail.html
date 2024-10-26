@@ -27,13 +27,12 @@
                   <a class="nav-link active bg-primary text-white" aria-current="page" href="{% url 'restaurant_detail' object.id %}">トップ</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link link-dark"
-                    {# TODO:2#} href="{% url 'reservation_create' object.id %}">予約</a>
+                  <a class="nav-link link-dark" {# TODO:2#} href="{% url 'reservation_create' object.id %}">予約</a>
                       {# href="{% url 'reservation_create' object.id %}">予約</a>#}
                 </li>
                 <li class="nav-item">
                   <a class="nav-link link-dark"
-                    {# TODO:3#} href="#">レビュー</a>
+                    {# TODO:3#} href="{% url 'review_list' object.id %}">レビュー</a>
                     {# href="{% url 'review_list' object.id %}">レビュー</a>#}
                 </li>
               </ul>

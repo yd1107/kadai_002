@@ -43,37 +43,38 @@ on_delete=models.PROTECT)
 
 class Reservation(models.Model):
     """予約モデル"""
-TIMES = (
-        ('','選択してください'), (datetime.time(2, 3), '2:30'),
-        (datetime.time(3, 0), '3:00'), (datetime.time(3, 30), '3:30'),(datetime.time(4, 0), '4:00'),
-        (datetime.time(4, 30), '4:30'),
-        (datetime.time(5, 0), '5:00'), (datetime.time(5, 30), '5:30'),(datetime.time(6, 0), '6:00'),
-        (datetime.time(6, 30), '6:30'),
-        (datetime.time(7, 0), '7:00'), (datetime.time(7, 30), '7:30'),(datetime.time(8, 0), '8:00'),
-        (datetime.time(8, 30), '8:30'),
-        (datetime.time(9, 0), '9:00'), (datetime.time(9, 30), '9:30'),(datetime.time(10, 0), '10:00'),
-        (datetime.time(10, 30), '10:30'),
-)
+    TIMES = (
+            ('','選択してください'), (datetime.time(2, 3), '2:30'),
+            (datetime.time(3, 0), '3:00'), (datetime.time(3, 30), '3:30'),(datetime.time(4, 0), '4:00'),
+            (datetime.time(4, 30), '4:30'),
+            (datetime.time(5, 0), '5:00'), (datetime.time(5, 30), '5:30'),(datetime.time(6, 0), '6:00'),
+            (datetime.time(6, 30), '6:30'),
+            (datetime.time(7, 0), '7:00'), (datetime.time(7, 30), '7:30'),(datetime.time(8, 0), '8:00'),
+            (datetime.time(8, 30), '8:30'),
+            (datetime.time(9, 0), '9:00'), (datetime.time(9, 30), '9:30'),(datetime.time(10, 0), '10:00'),
+            (datetime.time(10, 30), '10:30'),
+    )
 
-NUMBER_OF_PEOPLE = (
-    ('','選択してください'), (1, '1名'), (2, '2名'), (3, '3名'), (4, '4名'),(5, '5名'), (6, '6名'), (7, '7名'),(8, '8名'), (9, '9名'), (10, '10名'),
-    (11, '11名'), (12, '12名'), (13, '13名'), (14, '14名'), (15, '15名'),(16, '16名'), (17, '17名'), (18, '18名'),(19, '19名'), (20, '20名'),
-    (21, '21名'), (22, '22名'), (23, '23名'), (24, '24名'), (25, '25名'),(26, '26名'), (27, '27名'), (28, '28名'),(29, '29名'), (30, '30名'),(31, '31名'), (32, '32名'), (33, '33名'), (34, '34名'), (35, '35名'),(36, '36名'), (37, '37名'), (38, '38名'),(39, '39名'), (40, '40名'),
-    (41, '41名'), (42, '42名'), (43, '43名'), (44, '44名'), (45, '45名'),(46, '46名'), (47, '47名'), (48, '48名'),(49, '49名'), (50, '50名'),
-     )
+    NUMBER_OF_PEOPLE = (
+        ('','選択してください'), (1, '1名'), (2, '2名'), (3, '3名'), (4, '4名'),(5, '5名'), (6, '6名'), (7, '7名'),(8, '8名'), (9, '9名'), (10, '10名'),
+        (11, '11名'), (12, '12名'), (13, '13名'), (14, '14名'), (15, '15名'),(16, '16名'), (17, '17名'), (18, '18名'),(19, '19名'), (20, '20名'),
+        (21, '21名'), (22, '22名'), (23, '23名'), (24, '24名'), (25, '25名'),(26, '26名'), (27, '27名'), (28, '28名'),(29, '29名'), (30, '30名'),(31, '31名'), (32, '32名'), (33, '33名'), (34, '34名'), (35, '35名'),(36, '36名'), (37, '37名'), (38, '38名'),(39, '39名'), (40, '40名'),
+        (41, '41名'), (42, '42名'), (43, '43名'), (44, '44名'), (45, '45名'),(46, '46名'), (47, '47名'), (48, '48名'),(49, '49名'), (50, '50名'),
+        )
 
-user = models.ForeignKey(CustomUser, verbose_name='ユーザー',on_delete=models.PROTECT, null=True, blank=True)
-restaurant = models.ForeignKey(Restaurant, verbose_name='レストラン',on_delete=models.PROTECT)
-date = models.DateField(verbose_name='予約日')
-time = models.TimeField(verbose_name='時間', choices=TIMES, default='')
-number_of_people = models.IntegerField(verbose_name='人数',choices=NUMBER_OF_PEOPLE, default='')
-created_at = models.DateTimeField(verbose_name='予約申し込み日時',auto_now_add=True)
-updated_at = models.DateTimeField(verbose_name='予約更新日時', auto_now=True)
+    user = models.ForeignKey(CustomUser, verbose_name='ユーザー',on_delete=models.PROTECT, null=True, blank=True)
+    restaurant = models.ForeignKey(Restaurant, verbose_name='レストラン',on_delete=models.PROTECT)
+    date = models.DateField(verbose_name='予約日')
+    time = models.TimeField(verbose_name='時間', choices=TIMES, default='')
+    number_of_people = models.IntegerField(verbose_name='人数',choices=NUMBER_OF_PEOPLE, default='')
+    created_at = models.DateTimeField(verbose_name='予約申し込み日時',auto_now_add=True)
+    updated_at = models.DateTimeField(verbose_name='予約更新日時', auto_now=True)
 
-class Meta:
+    class Meta:
         verbose_name_plural = 'Reservation'
-def __str__(self):
-    return self.restaurant.name
+
+    def __str__(self):
+        return self.restaurant.name
 
 
 class Review(models.Model):

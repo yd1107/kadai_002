@@ -46,8 +46,8 @@
     <h2 class="mb-3">評価が高いお店</h2>
       <div class="row row-cols-xl-6 row-cols-md-3 row-cols-2 g-3 mb-5">
         {#TODO:6#}
-        {% for restaurant in restaurant_list %}
-        {# {% for restaurant,rate,rate_star in restaurant_list %} #}
+        <!-- {% for restaurant in restaurant_list %} -->
+        {% for restaurant, rate, rate_star in restaurant_list.items %}
           <div class="col">
             {#TODO:2#}
               <a href=" {% url 'restaurant_detail' restaurant.id %}" class="link-dark card-link">
@@ -65,10 +65,10 @@
                             </div>
                               <p class="card-text">
                                {#TODO:7#}
-                                  <span class="star-rating me-1" data-rate="5"></span>
-                                  5.0
-                                  {# <span class="star-rating me-1" data-rate="{{rate_star }}"></span> #}
-                                {# {{ rate }} #}
+                                  <!-- <span class="star-rating me-1" data-rate="5"></span> -->
+                                  <!-- 5.0 -->
+                                  <span class="star-rating me-1" data-rate="{{ rate_star }}"></span>
+                                    {{ rate }}
                               </p>
                             </div>
                         </div>  
@@ -105,6 +105,7 @@
       {% endif %}
       {% endfor %}
   </div>
+
     {# 新規掲載店 #}
       <h2 class="mb-3">新規掲載店</h2>
         <div class="row row-cols-xl-6 row-cols-md-3 row-cols-2 g-3 mb-5">
@@ -116,7 +117,7 @@
                   <div class="card h-100">
                     {% if new_restaurant.photo %}
                       <img src="{{ new_restaurant.photo.url }}" class="card-img-top vertical-card-image">
-                        {% endif %}
+                    {% endif %}
                       <div class="card-body">
                          <h3 class="card-title">{{ new_restaurant.name }}</h3>
                           <div class="text-muted small mb-1">
@@ -133,8 +134,9 @@
         </div>
   </div>
 </main>
-
+<!-- {% endfor %} -->
 {% endblock %}
+
 {% block js_script %}
 <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 <script>

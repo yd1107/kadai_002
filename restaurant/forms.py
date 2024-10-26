@@ -1,5 +1,5 @@
 from django import forms
-from .models import Reservation
+from .models import Reservation, Review
 
 class ReservationCreateForm(forms.ModelForm):
     class Meta:
@@ -16,3 +16,20 @@ class ReservationCreateForm(forms.ModelForm):
         self.fields['time'].widget.attrs['class'] = 'form-control'
 
         self.fields['number_of_people'].widget.attrs['class'] = 'form-control'
+
+
+class ReviewCreateForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ('comment', 'rate')
+        widgets = {'rate': forms.RadioSelect()}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['comment'].widget.attrs['class'] = 'form-control'
+        self.fields['comment'].widget.attrs['cols'] = '30'
+        self.fields['comment'].widget.attrs['rows'] = '5'
+        
+        self.fields['rate'].widget.attrs['class'] = 'form-check-input'
+
