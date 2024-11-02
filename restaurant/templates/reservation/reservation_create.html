@@ -14,26 +14,28 @@
           <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item"><a href="{% url 'top_page' %}">>ホーム</a></li>
             <li class="breadcrumb-item"><a href="{% url 'restaurant_list' %}?keyword=&button_type=keyword">店舗一覧</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'restaurant_detail' restaurant.id%}">店舗詳細</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'restaurant_detail' restaurant.id %}">店舗詳細</a></li>
             <li class="breadcrumb-item active" aria-current="page">予約</li>
           </ol>
         </nav>
           <h1 class="mb-2 text-center">{{ restaurant.name }}</h1>
             <p class="text-center">
               <span class="star-rating me-1" data-rate="{{ average_rate_star }}"></span>
-              {{ average_rate }} （{{ rate_count }}件）
+              {{ average_rate }}（{{ rate_count }}件）
             </p>
               <ul class="nav nav-tabs mb-3">
                 <li class="nav-item">
                   <a class="nav-link link-dark" href="{% url 'restaurant_detail' restaurant.id %}">トップ</a>
                 </li>
                   <li class="nav-item">
-                    <a class="nav-link active bg-primary text-white" aria-current="page" href="{% url 'reservation_create' restaurant.id %}">予約</a>
+                    <a class="nav-link active bg-primary text-white" aria-current="page" 
+                    href="{% url 'reservation_create' restaurant.id %}">予約</a>
                   </li>
                     <li class="nav-item">
-                      <a class="nav-link link-dark" {# TODO:1#} href="{% url 'review_list' restaurant.id %}">レビュー</a>
-                        {# href="{% url 'review_list' restaurant.id %}">レビュー
-                      </a>#}
+                      <a class="nav-link link-dark"
+                       {# TODO:1#}
+                        href="{% url 'review_list' restaurant.id %}">レビュー</a>
+                        {# href="{% url 'review_list' restaurant.id %}">レビュー</a>#}
                     </li>
               </ul>
                 <form method="POST" enctype='multipart/form-data'>
@@ -70,7 +72,7 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
 <script>
-    const restaurantRegularHolidays = {{ close_day_list }};
+    const restaurantRegularHolidays = { close_day_list };
     
     flatpickr('#reservation_date', {
         locale: 'ja',

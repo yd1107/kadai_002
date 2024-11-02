@@ -26,8 +26,7 @@ class Restaurant(models.Model):
     business_time = models.CharField(verbose_name='営業時間', max_length=64)
     close_day_of_week = models.CharField(verbose_name='定休日', max_length=32)
     seats_number = models.CharField(verbose_name='座席数', max_length=32)
-    category = models.ForeignKey(Category, verbose_name='カテゴリー',
-on_delete=models.PROTECT)
+    category = models.ForeignKey(Category, verbose_name='カテゴリー', on_delete=models.PROTECT)
 
     rate = models.FloatField(verbose_name='レート', default=0.0)
     review_num = models.IntegerField(verbose_name='レビュー数', default=0)
@@ -62,8 +61,8 @@ class Reservation(models.Model):
         (41, '41名'), (42, '42名'), (43, '43名'), (44, '44名'), (45, '45名'),(46, '46名'), (47, '47名'), (48, '48名'),(49, '49名'), (50, '50名'),
         )
 
-    user = models.ForeignKey(CustomUser, verbose_name='ユーザー',on_delete=models.PROTECT, null=True, blank=True)
-    restaurant = models.ForeignKey(Restaurant, verbose_name='レストラン',on_delete=models.PROTECT)
+    user = models.ForeignKey(CustomUser, verbose_name='ユーザー', on_delete=models.PROTECT, null=True, blank=True)
+    restaurant = models.ForeignKey(Restaurant, verbose_name='レストラン', on_delete=models.PROTECT)
     date = models.DateField(verbose_name='予約日')
     time = models.TimeField(verbose_name='時間', choices=TIMES, default='')
     number_of_people = models.IntegerField(verbose_name='人数',choices=NUMBER_OF_PEOPLE, default='')

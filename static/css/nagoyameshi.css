@@ -114,11 +114,15 @@ a {
 
 .card-link {
     transition: 0.3s;
+    /* チラつき対策 */
+  
   }
   
 .card-link:hover {
   opacity: 0.7;
+ 
   }
+
 .category-name {
   text-shadow: 0.25rem 0.25rem 1rem rgb(0 0 0 / 60%);
   }

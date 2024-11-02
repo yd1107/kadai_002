@@ -178,6 +178,7 @@ class RestaurantListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(RestaurantListView, self).get_context_data(**kwargs)
+        
         # get input value
         keyword = self.request.GET.get('keyword')
         category = self.request.GET.get('category')
@@ -218,8 +219,7 @@ class RestaurantListView(generic.ListView):
 
         # filtering queryset
         restaurant_list = models.Restaurant.objects.filter(
-            Q(name__icontains=keyword_session) | Q(address__icontains=keyword_session) | Q(
-                category__name__icontains=keyword_session))
+            Q(name__icontains=keyword_session) | Q(address__icontains=keyword_session) | Q(category__name__icontains=keyword_session))
         restaurant_list = restaurant_list.filter(category__name__icontains=category_session)
 
         if int(price_session) > 0:
@@ -238,6 +238,7 @@ class RestaurantListView(generic.ListView):
 
         # 表示順
         restaurant_list = restaurant_list.order_by(select_sort_session)
+        
         category_list = models.Category.objects.all()
 
         # querysetに含まれるレストランの平均レートを、レストランごとに取得して配列に格納
@@ -249,14 +250,15 @@ class RestaurantListView(generic.ListView):
             average_rate = models.Review.objects.filter(restaurant=restaurant).aggregate(Avg('rate'))
             average_rate = average_rate['rate__avg'] if average_rate['rate__avg'] is not None else 0 
             average_rate_list.append(round(average_rate, 2))
-        if average_rate % 1 == 0:
-            average_rate = int(average_rate)
-        else:
-            average_rate = round(average_rate * 2) / 2
-        average_rate_star_list.append(average_rate)
-        
-        rate_num = models.Review.objects.filter(restaurant=restaurant).count()
-        rate_num_list.append(rate_num)
+            
+            if average_rate % 1 == 0:
+                average_rate = int(average_rate)
+            else:
+                average_rate = round(average_rate * 2) / 2
+            average_rate_star_list.append(average_rate)
+            
+            rate_num = models.Review.objects.filter(restaurant=restaurant).count()
+            rate_num_list.append(rate_num)
 
         context.update({
             'category_list': category_list,
@@ -264,9 +266,8 @@ class RestaurantListView(generic.ListView):
             'category_session': category_session,
             'price_session': price_session,
             'select_sort_session': select_sort_session,
-            'restaurant_list': zip(restaurant_list, average_rate_list,
-average_rate_star_list, rate_num_list),
-    })
+            'restaurant_list': zip(restaurant_list, average_rate_list,average_rate_star_list, rate_num_list),
+         })
         return context
 
 class FavoriteListView(generic.ListView):
