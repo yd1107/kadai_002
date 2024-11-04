@@ -47,8 +47,9 @@
     <h2 class="mb-3">評価が高いお店</h2>
       <div class="row row-cols-xl-6 row-cols-md-3 row-cols-2 g-3 mb-5">
         {#TODO:6#}
-        {% for restaurant in restaurant_list %}
-        {% for restaurant, rate, rate_star in restaurant_list.items %}
+        {# % for restaurant in restaurant_list % #}
+        {# % for restaurant, rate, rate_star in restaurant_list.items % #}
+        {% for restaurant, rate, rate_star in restaurant_list %}
           <div class="col">
             {#TODO:2#}
               <a href=" {% url 'restaurant_detail' restaurant.id %}" class="link-dark card-link">
@@ -104,7 +105,7 @@
       {% for category in category_list %}
       {% if forloop.counter > 6 %}
       {#TODO:4#}
-        <a href="#" class="btn btn-outline-secondary btn-sm me-1 mb-2">{{ category.name }}</a>
+        <a href="{% url 'restaurant_list' %}?category={{ category.name }}&button_type=category" class="btn btn-outline-secondary btn-sm me-1 mb-2">{{ category.name }}</a>
       {% endif %}
       {% endfor %}
   </div>
@@ -137,7 +138,6 @@
         </div>
   </div>
 </main>
-<!-- {% endfor %} -->
 {% endblock %}
 
 {% block js_script %}
