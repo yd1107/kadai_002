@@ -192,8 +192,7 @@ class RestaurantListView(generic.ListView):
         select_sort_session = self.request.session.get('select_sort')
 
         # filtering queryset
-        restaurant_list = models.Restaurant.objects.filter(
-            Q(name__icontains=keyword_session) | Q(address__icontains=keyword_session) | Q(category__name__icontains=keyword_session))
+        restaurant_list = models.Restaurant.objects.filter(Q(name__icontains=keyword_session)|Q(address__icontains=keyword_session)|Q(category__name__icontains=keyword_session))
         restaurant_list = restaurant_list.filter(category__name__icontains=category_session)
 
         if int(price_session) > 0:
