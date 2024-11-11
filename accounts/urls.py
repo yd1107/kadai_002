@@ -9,5 +9,8 @@ urlpatterns = [
   path("subscribe-register/", views.SubscribeRegisterView.as_view(),name="subscribe_register"),
   path("subscribe-cancel/", views.SubscribeCancelView.as_view(),name="subscribe_cancel"),
   path("subscribe-payment/", views.SubscribePaymentView.as_view(),name="subscribe_payment"),
-
+  path("management/user-list",views.ManagementUserListView.as_view(), name="user_list"),
+  path("management/user-list-update/<int:pk>",views.ManagementUserUpdateView.as_view(), name="user_list_update"),
+  path("management/restaurant-list/",views.ManagementRestaurantListView.as_view(),name="restaurant_list"),
+  
 ]

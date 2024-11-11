@@ -69,3 +69,17 @@ class SubscribePaymentView(View):
         print(card_name, card_number)
         models.CustomUser.objects.filter(id=user_id).update(card_name=card_name,card_number=card_number)
         return redirect(reverse_lazy('top_page'))
+
+class ManagementUserListView(generic.ListView):
+    template_name = "management/user_list.html"
+    model = models.CustomUser
+
+
+class ManagementUserUpdateView(generic.UpdateView):
+    model = models.CustomUser
+    fields = '__all__'
+    template_name_suffix = '_list_update'
+
+class ManagementRestaurantListView(generic.ListView):
+    model = models.Restaurant
+    template_name = "management/restaurant_list.html"
