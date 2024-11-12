@@ -1,6 +1,7 @@
 from django.shortcuts import render , redirect
 from django.urls import reverse_lazy
 from django.views import generic , View
+from django.views.generic.edit import CreateView
 
 from . import forms
 from . import models
@@ -70,6 +71,9 @@ class SubscribePaymentView(View):
         models.CustomUser.objects.filter(id=user_id).update(card_name=card_name,card_number=card_number)
         return redirect(reverse_lazy('top_page'))
 
+
+#ここから管理者側
+
 class ManagementUserListView(generic.ListView):
     template_name = "management/user_list.html"
     model = models.CustomUser
@@ -78,8 +82,9 @@ class ManagementUserListView(generic.ListView):
 class ManagementUserUpdateView(generic.UpdateView):
     model = models.CustomUser
     fields = '__all__'
-    template_name_suffix = '_list_update'
+    template_name = 'management/user_list_update.html'
+    success_url = reverse_lazy('user_list')
 
-class ManagementRestaurantListView(generic.ListView):
+class ManagementRestaurantCreateView(generic.CreateView):
     model = models.Restaurant
-    template_name = "management/restaurant_list.html"
+    fields = '__all__'
