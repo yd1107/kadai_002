@@ -6,6 +6,10 @@ from django.views.generic.edit import CreateView
 from . import forms
 from . import models
 
+
+from restaurant.models import Restaurant
+from restaurant.models import Category
+
 # Create your views here.
 class UserDetailView(generic.DetailView):
     model = models.CustomUser
@@ -86,5 +90,10 @@ class ManagementUserUpdateView(generic.UpdateView):
     success_url = reverse_lazy('user_list')
 
 class ManagementRestaurantCreateView(generic.CreateView):
-    model = models.Restaurant
+    model = Restaurant
+    fields = '__all__'
+
+
+class ManagementCategoryCreateView(generic.CreateView):
+    model = Category
     fields = '__all__'

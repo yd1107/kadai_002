@@ -40,16 +40,16 @@
                 <li class="nav-item dropdown">
                   <a id="navbarDropdown" class="nav-linkdropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>{{ user.user_name }}</a>
                   <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" {#TODO:1#} href="{% url 'user_detail' user.id %}">会員情報</a>
-                    {# href="{% url 'user_detail' user.id %}">会員情報</a>#}
-                    <a class="dropdown-item"{#TODO:2#} href="{% url 'reservation_list' %}">予約一覧</a>
-                    {# href="{% url 'reservation_list' %}">予約一覧</a>#}
-                    <a class="dropdown-item"{#TODO:3#} href="{% url 'favorite_list' %}">お気に入り一覧</a>
-                    {# href="{% url 'favorite_list' %}">お気に入り一覧</a>#}
-                    <a class="dropdown-item" {#TODO:4#} href="{% url 'subscribe_payment' %}">お支払い方法</a>
-                    {# href="{%url 'subscribe_payment' %}">お支払い方法</a>#}
-                    <a class="dropdown-item"{#TODO:5#} href="{% url 'subscribe_cancel' %}">有料プラン解約</a>
-                    {# href="{%url 'subscribe_cancel' %}">有料プラン解約</a>#}
+                    <a class="dropdown-item" href="{% url 'user_detail' user.id %}">会員情報</a>
+                    <a class="dropdown-item" href="{% url 'reservation_list' %}">予約一覧</a>
+                    <a class="dropdown-item" href="{% url 'favorite_list' %}">お気に入り一覧</a>
+                    <a class="dropdown-item" href="{% url 'subscribe_payment' %}">お支払い方法</a>
+                    <a class="dropdown-item" href="{% url 'subscribe_cancel' %}">有料プラン解約</a>
+
+                      {% if user.is_staff %}
+                        <a class ="dropdown-item"  href="{% url 'user_list' %}">サイト管理</a>
+                      {% endif %}
+
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{% url 'account_logout' %}">ログアウト</a>
                   </div>
@@ -59,24 +59,27 @@
                   <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-linkdropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>{{ user.user_name }}</a>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item"{#TODO:6#} href="{% url 'user_detail' user.id %}">会員情報</a>
-                    {# href="{% url 'user_detail' user.id %}">会員情報</a> #}
-                    <a class="dropdown-item"{#TODO:7#} href="{% url 'subscribe_register' %}">有料プラン登録</a>
-                    {#href="{% url 'subscribe_register' %}">有料プラン登録</a>#}
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{% url 'account_logout' %}">ログアウト</a>
-            </div>
-            </li>
+                      <a class="dropdown-item" href="{% url 'user_detail' user.id %}">会員情報</a>
+                      <a class="dropdown-item" href="{% url 'subscribe_register' %}">有料プラン登録</a>
 
-              {% else %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'account_login' %}">ログイン</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'account_signup' %}">新規登録</a>
-                </li> 
-                  {% endif %}
-                  {% endif %}
+                      {% if user.is_staff %}
+                        <a class ="dropdown-item"  href="{% url 'user_list' %}">サイト管理</a>
+                      {% endif %}
+                      
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="{% url 'account_logout' %}">ログアウト</a>
+                    </div>
+                 </li>
+
+                {% else %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account_login' %}">ログイン</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account_signup' %}">新規登録</a>
+                  </li> 
+                {% endif %}
+              {% endif %}
             </ul>
           </div>
         </div>

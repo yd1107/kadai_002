@@ -3,6 +3,9 @@ import datetime
 from accounts.models import CustomUser
 from django.db import models
 
+#管理側ページ作成で追加
+from django.urls import reverse
+
 # Create your models here.
 
 class Category(models.Model):
@@ -15,6 +18,10 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    # カテゴリの追加・編集完了時のリダイレクト先
+    def get_absolute_url(self):
+         return reverse('###')
 
 class Restaurant(models.Model):
     """レストランモデル"""
