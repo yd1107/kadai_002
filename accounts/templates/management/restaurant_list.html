@@ -1,0 +1,25 @@
+{% extends "management/manage_base.html" %}
+{% load static %}
+{% block title %}NAGOYAMESHI{% endblock %}
+{% block sub_content %}
+
+  <h1>レストラン一覧表示</h1>
+  <table>
+    <thead>
+      <th>店舗ID</th>
+      <th>店名</th>
+      <th>住所</th>
+    </thead>
+    <tbody>
+      {% for restaurant in object_list %}
+        <tr>
+            <td>{{ restaurant.pk }}</td>
+            <td>{{ restaurant.name }}</td>
+            <td>{{ restaurant.address }}</td>
+          </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+{% endblock %}

@@ -5,10 +5,11 @@ from django.views.generic.edit import CreateView
 
 from . import forms
 from . import models
+from .mixins import onlyMnagementUserMixin
 
-
-from restaurant.models import Restaurant
 from restaurant.models import Category
+from restaurant.models import Restaurant
+
 
 # Create your views here.
 class UserDetailView(generic.DetailView):
@@ -78,22 +79,44 @@ class SubscribePaymentView(View):
 
 #ここから管理者側
 
-class ManagementUserListView(generic.ListView):
+#ユーザーリスト
+class ManagementUserListView(onlyMnagementUserMixin, generic.ListView):
     template_name = "management/user_list.html"
     model = models.CustomUser
 
 
-class ManagementUserUpdateView(generic.UpdateView):
+class ManagementUserUpdateView(onlyMnagementUserMixin, generic.UpdateView):
     model = models.CustomUser
     fields = '__all__'
     template_name = 'management/user_list_update.html'
-    success_url = reverse_lazy('user_list')
+    #success_url = reverse_lazy('user_list')
 
-class ManagementRestaurantCreateView(generic.CreateView):
+
+#カテゴリー
+class ManagementCategoryListView(onlyMnagementUserMixin, generic.ListView):
+    template_name = "management/category_list.html"
+    model = Category
+
+
+class ManagementCategoryCreateView(onlyMnagementUserMixin, generic.CreateView):
+    model = Category
+    fields = '__all__'
+
+class ManagementCategoryUpdateView(onlyMnagementUserMixin, generic.UpdateView):
+    model = Category
+    fields = '__all__'
+    template_name = 'management/category_list_update.html'
+    success_url = reverse_lazy('category_list')
+
+
+#店舗
+class ManagementRestaurantListView(onlyMnagementUserMixin, generic.ListView):
+    template_name = "management/restaurant_list.html"
+    model = Restaurant
+
+
+class ManagementRestaurantCreateView(onlyMnagementUserMixin, generic.CreateView):
     model = Restaurant
     fields = '__all__'
 
 
-class ManagementCategoryCreateView(generic.CreateView):
-    model = Category
-    fields = '__all__'
