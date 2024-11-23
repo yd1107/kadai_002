@@ -1,12 +1,17 @@
-{% extends "layout/base.html" %}
+{% extends "management/manage_base.html" %}
 {% load static %}
 {% block title %}NAGOYAMESHI{% endblock %}
-{% block content %}
+{% block sub_content %}
 
-<main>
-  
-  
-</main>
+<h1>削除</h1>
+ 
+ <form method="post">
+     {% csrf_token %}
+     以下のユーザーを削除してもよろしいですか？<br>
+     {{ user }}<br>
+     <a href="{% url 'user_list' %}">戻る</a>
+     <input type="submit" class="btn btn-danger" value="削除">
+ </form>
 
 
 

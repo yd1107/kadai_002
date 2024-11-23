@@ -254,8 +254,6 @@ a {
   
 }
 
-
-
 .manage_main div {
   padding: 20px 20px;
   display: flex;
@@ -291,6 +289,10 @@ table {
 
 }
 
+table td:hover {
+  text-decoration: underline;
+}
+
 table thead {
   border-bottom: 2px solid rgba(0, 0, 0, 0.5);
 }
@@ -302,6 +304,7 @@ table tbody, td {
 table button {
   font-size: 0.9rem;
 }
+
 
 
    

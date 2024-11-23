@@ -89,7 +89,11 @@ class ManagementUserUpdateView(onlyMnagementUserMixin, generic.UpdateView):
     model = models.CustomUser
     fields = '__all__'
     template_name = 'management/user_list_update.html'
-    #success_url = reverse_lazy('user_list')
+  
+class ManagementUserDeleteView(onlyMnagementUserMixin, generic.DetailView):
+    model = models.CustomUser
+    template_name = 'management/user_list_delete.html'
+    success_url = reverse_lazy('user_list')
 
 
 #カテゴリー
