@@ -14,12 +14,8 @@
           <a href="{% url 'user_list' %}">戻る</a>
 
           <input type="submit" class="btn btn-primary" value="更新">
-          <button class="btn btn-danger" onclick="location.href='{% url 'user_list_delete' pk=user.pk  %}'">削除</button>
-          
+
+        <button type="button" class="btn btn-danger" onclick="location.href='{% url 'user_list_delete' pk=del_user_id  %}'">削除</button>
     </form>
-  
 
-
-
-
-{% endblock %}
+    {% endblock %}

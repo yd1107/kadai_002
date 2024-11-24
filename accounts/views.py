@@ -90,12 +90,27 @@ class ManagementUserUpdateView(onlyMnagementUserMixin, generic.UpdateView):
     form_class =forms.UserUpdateForm
     model = models.CustomUser
     success_url = reverse_lazy('user_list')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["del_user_id"] = self.request.path.split('/')[-2]
+        
+        return context
+    
 
-
-class ManagementUserDeleteView(onlyMnagementUserMixin, generic.DetailView):
+class ManagementUserDeleteView(onlyMnagementUserMixin, generic.DeleteView):
     model = models.CustomUser
     template_name = 'management/user_list_delete.html'
     success_url = reverse_lazy('user_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        del_user_id = self.request.path.split('/')[-2]
+        context["del_user"] = models.CustomUser.objects.get(id=del_user_id)
+
+        return context
+
+    
 
 
 #カテゴリー
