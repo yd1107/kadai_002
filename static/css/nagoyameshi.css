@@ -283,27 +283,58 @@ a {
   font-size: 25px;
 }
 
-table {
+/* .manage_list {
  width: 80%;
  margin: auto 70px;
 
-}
+} */
+/* 
 
-table td:hover {
+.manage_list table td:hover {
   text-decoration: underline;
 }
 
-table thead {
+.manage_list tbody tr:hover {
+background-color: #F29F05;
+}
+
+
+.manage_list thead {
   border-bottom: 2px solid rgba(0, 0, 0, 0.5);
 }
 
-table tbody, td {
+.manage_list  tbody tr{
   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
-}
+} */
 
-table button {
-  font-size: 0.9rem;
-}
+
+.manage_list {
+  width: 80%;
+  margin: auto 70px;
+ 
+ }
+ 
+ .manage_list tbody tr:hover {
+   background-color: darksalmon;
+ }
+ 
+ .manage_list thead {
+   border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+   /* text-align: center; */
+ }
+ 
+ .manage_list tbody tr {
+   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+   height: 3em;
+ }
+
+ .user_update label {
+  min-width: 15%;
+ }
+
+ .user_update input[name="address"] {
+  width: 30%;
+ }
 
 
 

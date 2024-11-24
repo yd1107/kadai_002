@@ -6,9 +6,9 @@
   
     <h1>ユーザー編集</h1>
   
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" class="user_update">
         {% csrf_token %}
-        {# {{ form|bootstrap}} #}
+        {{ form.as_p}}
 
           <br>
           <a href="{% url 'user_list' %}">戻る</a>

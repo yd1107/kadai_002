@@ -7,7 +7,7 @@ from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
     """拡張ユーザーモデル"""
-    user_name = models.CharField(max_length=128, null=True, blank=True,verbose_name='ユーザー名前')
+    user_name = models.CharField(max_length=128, null=True, blank=True,verbose_name='ユーザー名')
     hurigana = models.CharField(max_length=128, null=True, blank=True,verbose_name='フリガナ')
     zip_code = models.CharField(max_length=16, null=True, blank=True,verbose_name='郵便番号')
     address = models.CharField(max_length=255, null=True, blank=True,verbose_name='住所')

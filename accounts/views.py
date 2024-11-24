@@ -86,10 +86,12 @@ class ManagementUserListView(onlyMnagementUserMixin, generic.ListView):
 
 
 class ManagementUserUpdateView(onlyMnagementUserMixin, generic.UpdateView):
-    model = models.CustomUser
-    fields = '__all__'
     template_name = 'management/user_list_update.html'
-  
+    form_class =forms.UserUpdateForm
+    model = models.CustomUser
+    success_url = reverse_lazy('user_list')
+
+
 class ManagementUserDeleteView(onlyMnagementUserMixin, generic.DetailView):
     model = models.CustomUser
     template_name = 'management/user_list_delete.html'
@@ -114,13 +116,22 @@ class ManagementCategoryUpdateView(onlyMnagementUserMixin, generic.UpdateView):
 
 
 #店舗
+class ManagementRestaurantCreateView(onlyMnagementUserMixin, generic.CreateView):
+    model = Restaurant
+    fields = '__all__'
+
 class ManagementRestaurantListView(onlyMnagementUserMixin, generic.ListView):
     template_name = "management/restaurant_list.html"
     model = Restaurant
 
-
-class ManagementRestaurantCreateView(onlyMnagementUserMixin, generic.CreateView):
+class ManagementRestaurantUpdateView(onlyMnagementUserMixin, generic.UpdateView):
+    template_name = 'management/restaurant_update.html'
+    form_class = forms.Restaurant
     model = Restaurant
-    fields = '__all__'
+    success_url = reverse_lazy('restaurant_list')
+
+
+
+
 
 

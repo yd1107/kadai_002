@@ -1,6 +1,7 @@
 from allauth.account.forms import SignupForm, LoginForm
 from django import forms
 from .models import CustomUser
+from restaurant.models import Restaurant
 
 class MySignupForm(SignupForm):
     user_name = forms.CharField(max_length=255, label='氏名')
@@ -14,14 +15,14 @@ class MySignupForm(SignupForm):
     
     def __init__(self, *args, **kwargs):
       super(MySignupForm, self).__init__(*args, **kwargs)
-      self.fields['user_name'].widget = forms.TextInput(attrs={'class':'form-control', 'placeholder': '侍 太郎'})
-      self.fields['hurigana'].widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'サムライ タロ'})
-      self.fields['zip_code'].widget = forms.TextInput(attrs={'class':'form-control', 'placeholder': '1010022'})
-      self.fields['address'].widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': '東京都千代田区神田棟堀町300番地'})
-      self.fields['phone_number'].widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': '09012345678'})
-      self.fields['birthday'].widget = forms.TextInput(attrs={'class':'form-control', 'placeholder': '19950401'})
-      self.fields['job'].widget = forms.TextInput(attrs={'class':'form-control', 'placeholder': 'エンジニア'})
-      self.fields['email'].widget = forms.TextInput(attrs={'type': 'email', 'class': 'form-control', 'placeholder':'taro.samurai@example.com'})
+      self.fields['user_name'].widget = forms.TextInput(attrs={'placeholder': '侍 太郎'})
+      self.fields['hurigana'].widget = forms.TextInput(attrs={'placeholder': 'サムライ タロ'})
+      self.fields['zip_code'].widget = forms.TextInput(attrs={'placeholder': '1010022'})
+      self.fields['address'].widget = forms.TextInput(attrs={'placeholder': '東京都千代田区神田棟堀町300番地'})
+      self.fields['phone_number'].widget = forms.TextInput(attrs={'placeholder': '09012345678'})
+      self.fields['birthday'].widget = forms.TextInput(attrs={'placeholder': '19950401'})
+      self.fields['job'].widget = forms.TextInput(attrs={'placeholder': 'エンジニア'})
+      self.fields['email'].widget = forms.TextInput(attrs={'type': 'email','placeholder':'taro.samurai@example.com'})
       self.fields['password1'].widget = forms.PasswordInput(attrs={'class':'form-control'})
       self.fields['password2'].widget = forms.PasswordInput(attrs={'class':'form-control'})
       
@@ -45,14 +46,36 @@ class MyLoginForm(LoginForm):
 class UserUpdateForm(forms.ModelForm):
     class Meta:
       model = CustomUser
-      fields = ('user_name', 'hurigana', 'zip_code', 'address', 'phone_number','birthday', 'job', 'email',)
-      def __init__(self, *args, **kwargs):
-          super().__init__(*args, **kwargs)
-          self.fields['user_name'].widget = forms.TextInput(attrs={'class':'form-control', 'placeholder': '侍 太郎'})
-          self.fields['hurigana'].widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'サムライ タロ'})
-          self.fields['zip_code'].widget = forms.TextInput(attrs={'class':'form-control', 'placeholder': '1010022'})
-          self.fields['address'].widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': '東京都千代田区神田棟堀町300番地'})
-          self.fields['phone_number'].widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': '09012345678'})
-          self.fields['birthday'].widget = forms.TextInput(attrs={'class':'form-control', 'placeholder': '19950401'})
-          self.fields['job'].widget = forms.TextInput(attrs={'class':'form-control', 'placeholder': 'エンジニア'})
-          self.fields['email'].widget = forms.TextInput(attrs={'type': 'email', 'class': 'form-control', 'placeholder':'taro.samurai@example.com'})
+      fields = ('user_name', 'hurigana', 'zip_code', 'address', 'phone_number','birthday', 'job', )
+    
+    def __init__(self, *args, **kwargs):
+          
+      super().__init__(*args, **kwargs)
+      self.label_suffix = ""
+      self.fields['user_name'].widget = forms.TextInput(attrs={'placeholder': '侍 太郎'})
+      self.fields['hurigana'].widget = forms.TextInput(attrs={'placeholder': 'サムライ タロ'})
+      self.fields['zip_code'].widget = forms.TextInput(attrs={'placeholder': '1010022'})
+      self.fields['address'].widget = forms.TextInput(attrs={'placeholder': '東京都千代田区神田棟堀町300番地'})
+      self.fields['phone_number'].widget = forms.TextInput(attrs={'placeholder': '09012345678'})
+      self.fields['birthday'].widget = forms.TextInput(attrs={'placeholder': '19950401'})
+      self.fields['job'].widget = forms.TextInput(attrs={'placeholder': 'エンジニア'})
+
+
+class RestaurantUpdateForm(forms.ModelForm):
+    class Meta:
+      model = Restaurant
+      fields = ('description', 'price', 'zip_code', 'address', 'business_time', 'close_day_of_week', 'seats_number', 'category',)
+
+    def __init__(self, *args, **kwargs):
+          
+      super().__init__(*args, **kwargs)
+      self.label_suffix = ""
+
+      self.fields['description'].widget = forms.TextInput(attrs={'placeholder': '昔ながらの名古屋の味をご賞味ください'})
+      self.fields['price'].widget = forms.TextInput(attrs={'placeholder': '2,000円〜3,000円'})
+      self.fields['zip_code'].widget = forms.TextInput(attrs={'placeholder': '1010022'})
+      self.fields['address'].widget = forms.TextInput(attrs={'placeholder': '東京都千代田区神田棟堀町300番地'})
+      self.fields['bussiness_time'].widget = forms.TextInput(attrs={'placeholder': '11:00〜23:00'})
+      self.fields['close_day_of_week'].widget = forms.TextInput(attrs={'placeholder': '水'})
+      self.fields['seats_number'].widget = forms.TextInput(attrs={'placeholder': '22席'})
+      self.fields['category'].widget = forms.TextInput(attrs={'placeholder': '和食'})
