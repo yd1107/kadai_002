@@ -1,12 +1,19 @@
-{% extends "layout/base.html" %}
+{% extends "management/manage_base.html" %}
 {% load static %}
 {% block title %}NAGOYAMESHI{% endblock %}
-{% block content %}
+{% block sub_content %}
 
-<main>
-  
-  
-</main>
+<h1>削除</h1>
+ 
+ <form method="post">
+     {% csrf_token %}
+
+     以下の店舗情報を削除してもよろしいですか？<br>
+     {{ del_resutaurant.name }}<br>
+
+     <a href="{% url 'restaurant_list' %}">戻る</a>
+     <input type="submit" class="btn btn-danger" value="削除">
+ </form>
 
 
 

@@ -145,6 +145,24 @@ class ManagementRestaurantUpdateView(onlyMnagementUserMixin, generic.UpdateView)
     model = Restaurant
     success_url = reverse_lazy('restaurant_list')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["del_restaurant_id"] = self.request.path.split('/')[-2]
+        
+        return context
+
+class ManagementRestaurantDeleteView(onlyMnagementUserMixin, generic.DeleteView):
+    model = Restaurant
+    template_name = 'management/restaurant_delete.html'
+    success_url = reverse_lazy('restaurant_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        del_restaurant_id = self.request.path.split('/')[-2]
+        context["del_restaurant"] = models.Restaurant.objects.get(id=del_restaurant_id)
+
+        return context
+
 
 
 
