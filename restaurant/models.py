@@ -47,6 +47,9 @@ class Restaurant(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+         return reverse('restaurant_list')
+
 class Reservation(models.Model):
     """予約モデル"""
     TIMES = (
