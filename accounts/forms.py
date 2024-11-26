@@ -2,6 +2,7 @@ from allauth.account.forms import SignupForm, LoginForm
 from django import forms
 from .models import CustomUser
 from restaurant.models import Restaurant
+from restaurant.models import Category
 
 class MySignupForm(SignupForm):
     user_name = forms.CharField(max_length=255, label='氏名')
@@ -90,3 +91,16 @@ class RestaurantUpdateForm(forms.ModelForm):
       self.fields['close_day_of_week'].widget = forms.TextInput(attrs={'placeholder': '水'})
       self.fields['seats_number'].widget = forms.TextInput(attrs={'placeholder': '22席'})
       self.fields['category'].widget = forms.TextInput(attrs={'placeholder': '和食'})
+
+
+class CategoryUpdateForm(forms.ModelForm):
+    name = forms.CharField(max_length=64, label='カテゴリー名')
+
+    class Meta:
+      model = Category
+      fields = ('name', )
+
+    def __init__(self, *args, **kwargs):
+      super().__init__(*args, **kwargs)
+      self.label_suffix = ""
+      self.fields['name'].widget = forms.TextInput(attrs={'placeholder': 'カテゴリー名'})

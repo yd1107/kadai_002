@@ -1,15 +1,15 @@
 {% extends "management/manage_base.html" %}
 {% load static %}
-{% block title %}NAGOYAMESHI{% endblock %}
+{% block title %}店舗の削除{% endblock %}
 {% block sub_content %}
 
-<h1>削除</h1>
+<h1>店舗情報削除</h1>
  
  <form method="post">
      {% csrf_token %}
 
      以下の店舗情報を削除してもよろしいですか？<br>
-     {{ del_resutaurant.name }}<br>
+     {{ del_restaurant.name }}<br>
 
      <a href="{% url 'restaurant_list' %}">戻る</a>
      <input type="submit" class="btn btn-danger" value="削除">

@@ -1,13 +1,24 @@
-{% extends "layout/base.html" %}
+{% extends "management/manage_base.html" %}
 {% load static %}
-{% block title %}カテゴリの編集{% endblock %}
-{% block content %}
+{% block title %}カテゴリーの編集{% endblock %}
+{% block sub_content %}
 
-<main>
-  
-  
-</main>
+<h1>カテゴリー編集</h1>
 
+<form method="post" enctype="multipart/form-data" class="category_update">
+  {% csrf_token %}
+  {{ form.as_p}}
 
+    <br>
+    <a href="{% url 'category_list' %}">戻る</a>
+
+    <input type="submit" class="btn btn-primary" value="更新">
+
+  <button type="button" class="btn btn-danger" onclick="location.href='{% url 'category_delete' pk=del_category_id  %}'">削除</button>
+</form>
 
 {% endblock %}
+
+
+
+

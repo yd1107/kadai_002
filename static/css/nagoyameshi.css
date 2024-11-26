@@ -283,35 +283,10 @@ a {
   font-size: 25px;
 }
 
-/* .manage_list {
- width: 80%;
- margin: auto 70px;
-
-} */
-/* 
-
-.manage_list table td:hover {
-  text-decoration: underline;
-}
-
-.manage_list tbody tr:hover {
-background-color: #F29F05;
-}
-
-
-.manage_list thead {
-  border-bottom: 2px solid rgba(0, 0, 0, 0.5);
-}
-
-.manage_list  tbody tr{
-  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
-} */
-
 
 .manage_list {
   width: 80%;
   margin: auto 70px;
- 
  }
  
  .manage_list tbody tr:hover {
@@ -320,7 +295,7 @@ background-color: #F29F05;
  
  .manage_list thead {
    border-bottom: 2px solid rgba(0, 0, 0, 0.5);
-   /* text-align: center; */
+
  }
  
  .manage_list tbody tr {
@@ -328,6 +303,7 @@ background-color: #F29F05;
    height: 3em;
  }
 
+ /* ユーザー */
  .user_update label {
   min-width: 15%;
  }
@@ -336,6 +312,21 @@ background-color: #F29F05;
   width: 30%;
  }
 
+ /* カテゴリ- */
+.category_update {
+  width: 70%;
+  padding: 30px 30px;
+}
+
+.category_update label {
+  min-width: 15%;
+}
+
+/* 店舗 */
+.restaurant_create {
+  width: 70%;
+  padding: 30px 30px;
+}
 
 
    

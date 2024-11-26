@@ -17,7 +17,9 @@ urlpatterns = [
   path("management/restaurant-delete/<int:pk>/",views.ManagementRestaurantDeleteView.as_view(), name="restaurant_delete"),
   path("management/restaurant-create/",views.ManagementRestaurantCreateView.as_view(), name="restaurant_create"),
   path("management/category-list",views.ManagementCategoryListView.as_view(), name="category_list"),
-  path("management/category-list-update/<int:pk>/",views.ManagementCategoryUpdateView.as_view(), name="category_list_update"),
+  path("management/category-create/",views.ManagementCategoryCreateView.as_view(), name="category_create"),
+  path("management/category-update/<int:pk>/",views.ManagementCategoryUpdateView.as_view(), name="category_update"),
+  path("management/category-delete/<int:pk>/",views.ManagementCategoryDeleteView.as_view(), name="category_delete"),
  
 
 ]

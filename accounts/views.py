@@ -121,18 +121,38 @@ class ManagementCategoryListView(onlyMnagementUserMixin, generic.ListView):
 
 class ManagementCategoryCreateView(onlyMnagementUserMixin, generic.CreateView):
     model = Category
+    template_name = 'management/category_create.html'
     fields = '__all__'
 
 class ManagementCategoryUpdateView(onlyMnagementUserMixin, generic.UpdateView):
     model = Category
     fields = '__all__'
-    template_name = 'management/category_list_update.html'
+    template_name = 'management/category_update.html'
     success_url = reverse_lazy('category_list')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["del_category_id"] = self.request.path.split('/')[-2]
+        
+        return context
+
+class ManagementCategoryDeleteView(onlyMnagementUserMixin, generic.DeleteView):
+    model = Category
+    fields = '__all__'
+    template_name = 'management/category_delete.html'  
+    success_url = reverse_lazy('category_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        del_category_id = self.request.path.split('/')[-2]
+        context["del_category"] = Category.objects.get(id=del_category_id)
+
+        return context
 
 #店舗
 class ManagementRestaurantCreateView(onlyMnagementUserMixin, generic.CreateView):
     model = Restaurant
+    template_name = 'management/restaurant_create.html'
     fields = '__all__'
 
 class ManagementRestaurantListView(onlyMnagementUserMixin, generic.ListView):
@@ -159,7 +179,7 @@ class ManagementRestaurantDeleteView(onlyMnagementUserMixin, generic.DeleteView)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         del_restaurant_id = self.request.path.split('/')[-2]
-        context["del_restaurant"] = models.Restaurant.objects.get(id=del_restaurant_id)
+        context["del_restaurant"] = Restaurant.objects.get(id=del_restaurant_id)
 
         return context
 

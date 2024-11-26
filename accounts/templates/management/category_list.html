@@ -4,6 +4,9 @@
 {% block sub_content %}
 
   <h1>カテゴリー一覧表示</h1>
+  <a href="{% url 'category_create' %}">カテゴリーの追加はこちら</a>
+  
+
   <table class="manage_list">
     <thead>
       <th>カテゴリID</th>
@@ -12,10 +15,9 @@
     </thead>
     <tbody>
       {% for category in object_list %}
-        <tr>
+        <tr onclick="location.href='{% url 'category_update' pk=category.pk %}'">
           <td>{{ category.pk }}</td>
           <td>{{ category.name }}</td>
-            
         </tr>
       {% endfor %}
     </tbody>

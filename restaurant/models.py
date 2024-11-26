@@ -21,7 +21,7 @@ class Category(models.Model):
 
     # カテゴリの追加・編集完了時のリダイレクト先
     def get_absolute_url(self):
-         return reverse('###')
+         return reverse('category_list')
 
 class Restaurant(models.Model):
     """レストランモデル"""

@@ -1,9 +1,10 @@
 {% extends "management/manage_base.html" %}
 {% load static %}
-{% block title %}NAGOYAMESHI{% endblock %}
+{% block title %}店舗一覧{% endblock %}
 {% block sub_content %}
 
-  <h1>レストラン一覧表示</h1>
+  <h1>店舗一覧表示</h1>
+  <a href="{% url 'restaurant_create' %}">掲載店舗新規登録はこちら</a>
   <table class="manage_list">
     <thead>
       <th>店舗ID</th>
