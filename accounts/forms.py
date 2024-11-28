@@ -62,8 +62,6 @@ class UserUpdateForm(forms.ModelForm):
       self.fields['job'].widget = forms.TextInput(attrs={'placeholder': 'エンジニア'})
 
 
-#店舗登録
-#class RestaurantCreateForm(forms.ModelForm):
 
 
 class RestaurantUpdateForm(forms.ModelForm):

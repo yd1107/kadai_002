@@ -156,14 +156,14 @@ class ManagementRestaurantCreateView(onlyMnagementUserMixin, generic.CreateView)
     fields = '__all__'
 
 class ManagementRestaurantListView(onlyMnagementUserMixin, generic.ListView):
-    template_name = "management/restaurant_list.html"
+    template_name = "management/restaurant_manage_list.html"
     model = Restaurant
 
 class ManagementRestaurantUpdateView(onlyMnagementUserMixin, generic.UpdateView):
     template_name = 'management/restaurant_update.html'
     form_class = forms.RestaurantUpdateForm
     model = Restaurant
-    success_url = reverse_lazy('restaurant_list')
+    success_url = reverse_lazy('restaurant_manage_list')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -174,7 +174,7 @@ class ManagementRestaurantUpdateView(onlyMnagementUserMixin, generic.UpdateView)
 class ManagementRestaurantDeleteView(onlyMnagementUserMixin, generic.DeleteView):
     model = Restaurant
     template_name = 'management/restaurant_delete.html'
-    success_url = reverse_lazy('restaurant_list')
+    success_url = reverse_lazy('restaurant_manage_list')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
