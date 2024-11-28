@@ -313,25 +313,30 @@ a {
  }
 
  /* カテゴリ- */
-.category_update {
-  width: 70%;
-  padding: 30px 30px;
-}
-
 .category_update label {
   min-width: 15%;
 }
 
-/* 店舗 */
-.restaurant_create {
-  width: 70%;
-  padding: 30px 30px;
+.category_create label{
+  min-width: 15%;
 }
 
+/* 店舗 */
+.restaurant_create label {
+  min-width: 15%;
+}
 
+.restaurant_update label{
+  min-width: 15%;
+
+}
+
+.new {
+  display: block;
+  padding:0px 0px 20px  500px;  
    
-   
+}
     
-    
+  
   
    

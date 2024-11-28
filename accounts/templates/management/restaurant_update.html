@@ -3,6 +3,7 @@
 {% block title %}店舗の編集{% endblock %}
 {% block sub_content %}
 
+<h1>店舗情報編集</h1>
 <form method="post" enctype="multipart/form-data" class="restaurant_update">
   {% csrf_token %}
   {{ form.as_p}}
@@ -11,7 +12,7 @@
     <a href="{% url 'restaurant_list' %}">戻る</a>
 
     <input type="submit" class="btn btn-primary" value="更新">
-    <button class="btn btn-danger" onclick="location.href='{% url 'restaurant_delete' pk=del_restaurant_id %}'">削除</button>
+    <button type="button" class="btn btn-danger" onclick="location.href='{% url 'restaurant_delete' pk=del_restaurant_id %}'">削除</button>
     
 </form>
 

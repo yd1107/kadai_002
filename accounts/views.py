@@ -121,12 +121,12 @@ class ManagementCategoryListView(onlyMnagementUserMixin, generic.ListView):
 
 class ManagementCategoryCreateView(onlyMnagementUserMixin, generic.CreateView):
     model = Category
+    form_class = forms.CategoryCreateForm
     template_name = 'management/category_create.html'
-    fields = '__all__'
 
 class ManagementCategoryUpdateView(onlyMnagementUserMixin, generic.UpdateView):
     model = Category
-    fields = '__all__'
+    form_class = forms.CategoryUpdateForm
     template_name = 'management/category_update.html'
     success_url = reverse_lazy('category_list')
 
@@ -161,7 +161,7 @@ class ManagementRestaurantListView(onlyMnagementUserMixin, generic.ListView):
 
 class ManagementRestaurantUpdateView(onlyMnagementUserMixin, generic.UpdateView):
     template_name = 'management/restaurant_update.html'
-    form_class = forms.Restaurant
+    form_class = forms.RestaurantUpdateForm
     model = Restaurant
     success_url = reverse_lazy('restaurant_list')
 
