@@ -9,6 +9,7 @@ from .mixins import onlyMnagementUserMixin
 
 from restaurant.models import Category
 from restaurant.models import Restaurant
+from restaurant.models import Sales
 
 
 # Create your views here.
@@ -182,6 +183,12 @@ class ManagementRestaurantDeleteView(onlyMnagementUserMixin, generic.DeleteView)
         context["del_restaurant"] = Restaurant.objects.get(id=del_restaurant_id)
 
         return context
+
+
+#売上
+class ManagementSalesListView(onlyMnagementUserMixin, generic.ListView):
+    template_name = 'management/sales.html'
+    model = Sales
 
 
 

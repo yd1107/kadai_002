@@ -336,7 +336,20 @@ a {
   padding:0px 0px 20px  500px;  
    
 }
-    
+
+.sales {
+  width: 50%;
+
+}
+
+.sales thead {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+
+}
   
+.sales tbody tr {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  height: 3em;
+}
   
    

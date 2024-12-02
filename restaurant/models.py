@@ -112,3 +112,16 @@ class Favorite(models.Model):
         verbose_name_plural = 'Favorite'
     def __str__(self):
         return self.restaurant.name
+
+class Sales(models.Model):
+    """売上モデル"""
+    name = models.CharField(verbose_name='売上', max_length=64, null=True, blank=True)
+    year = models.IntegerField('年', default=0)
+    month = models.IntegerField('月', default=0)
+    amount = models.IntegerField('売上金額', default=0)
+
+    class Meta:
+        verbose_name_plural = 'Sales'
+
+    def __str__(self):
+        return self.name

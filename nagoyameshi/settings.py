@@ -46,7 +46,10 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'django.contrib.humanize',
 ]
+
+NUMBER_GROUPING = 3
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

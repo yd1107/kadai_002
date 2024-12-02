@@ -74,13 +74,11 @@ class RestaurantUpdateForm(forms.ModelForm):
     business_time = forms.CharField(label='営業時間', max_length=64)
     close_day_of_week = forms.CharField(label='定休日', max_length=32)
     seats_number = forms.CharField(label='座席数', max_length=32)
-    #category = forms.ChoiceField(label='カテゴリー', max_length=32)
-
+    category = forms.ModelChoiceField(label="カテゴリ", queryset=Category.objects.all())
 
     class Meta:
       model = Restaurant
-      fields = ('name', 'description', 'price', 'zip_code', 'address', 'business_time', 'close_day_of_week', 'seats_number',)
-      #fields = ('name', 'description', 'price', 'zip_code', 'address', 'business_time', 'close_day_of_week', 'seats_number', 'category',)
+      fields = ('name', 'description', 'price', 'zip_code', 'address', 'business_time', 'close_day_of_week', 'seats_number', 'category',)
 
     def __init__(self, *args, **kwargs):
       super().__init__(*args, **kwargs)
@@ -93,7 +91,6 @@ class RestaurantUpdateForm(forms.ModelForm):
       self.fields['business_time'].widget = forms.TextInput(attrs={'placeholder': '11:00〜23:00'})
       self.fields['close_day_of_week'].widget = forms.TextInput(attrs={'placeholder': '水'})
       self.fields['seats_number'].widget = forms.TextInput(attrs={'placeholder': '22席'})
-      #self.fields['category'].widget = forms.ChoiceField(attrs={'placeholder': '和食'})
 
 
 
