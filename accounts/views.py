@@ -85,6 +85,12 @@ class ManagementUserListView(onlyMnagementUserMixin, generic.ListView):
     template_name = "management/user_list.html"
     model = models.CustomUser
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["selected"] = "user"
+        
+        return context
+
 
 class ManagementUserUpdateView(onlyMnagementUserMixin, generic.UpdateView):
     template_name = 'management/user_list_update.html'
@@ -95,6 +101,7 @@ class ManagementUserUpdateView(onlyMnagementUserMixin, generic.UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["del_user_id"] = self.request.path.split('/')[-2]
+        context["selected"] = "user"
         
         return context
     
@@ -108,6 +115,7 @@ class ManagementUserDeleteView(onlyMnagementUserMixin, generic.DeleteView):
         context = super().get_context_data(**kwargs)
         del_user_id = self.request.path.split('/')[-2]
         context["del_user"] = models.CustomUser.objects.get(id=del_user_id)
+        context["selected"] = "user"
 
         return context
 
@@ -119,11 +127,24 @@ class ManagementCategoryListView(onlyMnagementUserMixin, generic.ListView):
     template_name = "management/category_list.html"
     model = Category
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["selected"] = "category"
+        
+        return context
+
 
 class ManagementCategoryCreateView(onlyMnagementUserMixin, generic.CreateView):
     model = Category
     form_class = forms.CategoryCreateForm
     template_name = 'management/category_create.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["selected"] = "category"
+        
+        return context
+
 
 class ManagementCategoryUpdateView(onlyMnagementUserMixin, generic.UpdateView):
     model = Category
@@ -134,7 +155,8 @@ class ManagementCategoryUpdateView(onlyMnagementUserMixin, generic.UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["del_category_id"] = self.request.path.split('/')[-2]
-        
+        context["selected"] = "category"
+
         return context
 
 class ManagementCategoryDeleteView(onlyMnagementUserMixin, generic.DeleteView):
@@ -147,6 +169,7 @@ class ManagementCategoryDeleteView(onlyMnagementUserMixin, generic.DeleteView):
         context = super().get_context_data(**kwargs)
         del_category_id = self.request.path.split('/')[-2]
         context["del_category"] = Category.objects.get(id=del_category_id)
+        context["selected"] = "category"
 
         return context
 
@@ -156,9 +179,21 @@ class ManagementRestaurantCreateView(onlyMnagementUserMixin, generic.CreateView)
     template_name = 'management/restaurant_create.html'
     fields = '__all__'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["selected"] = "restaurant"
+        
+        return context
+
 class ManagementRestaurantListView(onlyMnagementUserMixin, generic.ListView):
     template_name = "management/restaurant_manage_list.html"
     model = Restaurant
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["selected"] = "restaurant"
+        
+        return context
 
 class ManagementRestaurantUpdateView(onlyMnagementUserMixin, generic.UpdateView):
     template_name = 'management/restaurant_update.html'
@@ -169,7 +204,8 @@ class ManagementRestaurantUpdateView(onlyMnagementUserMixin, generic.UpdateView)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["del_restaurant_id"] = self.request.path.split('/')[-2]
-        
+        context["selected"] = "restaurant"
+
         return context
 
 class ManagementRestaurantDeleteView(onlyMnagementUserMixin, generic.DeleteView):
@@ -181,6 +217,7 @@ class ManagementRestaurantDeleteView(onlyMnagementUserMixin, generic.DeleteView)
         context = super().get_context_data(**kwargs)
         del_restaurant_id = self.request.path.split('/')[-2]
         context["del_restaurant"] = Restaurant.objects.get(id=del_restaurant_id)
+        context["selected"] = "restaurant"
 
         return context
 
@@ -190,8 +227,11 @@ class ManagementSalesListView(onlyMnagementUserMixin, generic.ListView):
     template_name = 'management/sales.html'
     model = Sales
 
-
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["selected"] = "sales"
+        
+        return context
 
 
 

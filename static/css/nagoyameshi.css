@@ -255,19 +255,26 @@ a {
 }
 
 .manage_main div {
-  padding: 20px 20px;
   display: flex;
   justify-content: space-between; 
   box-shadow: 0px 18px 20px -8px rgba(0, 0, 0, 0.5);
   background-color: rgb(249, 249, 249);
 }
 
+.manage_main .manage_selected {
+  color: #D90421;
+  background-color: #F29F05;
+}
+
+
 .manage_main a {
   display: inline-block;
-  width: 100%;
+  width: 25%;
+  height: 100%;
   text-align: center;
   font-size: 1.3rem;
   color: #191919;   
+  padding: 20px 20px;
   
 }
 
@@ -286,7 +293,7 @@ a {
 
 .manage_list {
   width: 80%;
-  margin: auto 70px;
+  margin: 30px auto;
  }
  
  .manage_list tbody tr:hover {
@@ -339,6 +346,7 @@ a {
 
 .sales {
   width: 50%;
+  margin: 30px auto;
 
 }
 

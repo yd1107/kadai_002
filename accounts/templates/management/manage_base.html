@@ -5,10 +5,30 @@
 {% block content %}
   <main class="manage_main">
     <div>
-      <a href="{% url 'user_list' %}">ユーザー管理</a>
-      <a href="{% url 'restaurant_manage_list' %}">店舗管理</a>
-      <a href="{% url 'category_list' %}">カテゴリー管理</a>
-      <a href="{% url 'sales' %}">売上</a>
+      {% if selected == "user" %}
+        <a class="manage_selected" href="{% url 'user_list' %}">ユーザー管理</a>
+      {% else %}
+        <a href="{% url 'user_list' %}">ユーザー管理</a>
+      {% endif %}
+
+      {% if selected == "restaurant" %}
+        <a class="manage_selected" href="{% url 'restaurant_manage_list' %}">店舗管理</a>
+      {% else %}
+        <a href="{% url 'restaurant_manage_list' %}">店舗管理</a>
+      {% endif %}
+
+      {% if selected == "category" %}
+        <a class="manage_selected" href="{% url 'category_list' %}">カテゴリー管理</a>
+      {% else %}
+        <a href="{% url 'category_list' %}">カテゴリー管理</a>
+      {% endif %}
+
+      {% if selected == "sales" %}
+        <a class="manage_selected" href="{% url 'sales' %}">売上</a>
+      {% else %}
+        <a href="{% url 'sales' %}">売上</a>
+      {% endif %}
+
     </div>
 
   {% block sub_content %}
