@@ -257,13 +257,13 @@ a {
 .manage_main div {
   display: flex;
   justify-content: space-between; 
-  box-shadow: 0px 18px 20px -8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 10px 15px -8px rgba(0, 0, 0, 0.5);
   background-color: rgb(249, 249, 249);
 }
 
 .manage_main .manage_selected {
-  color: #D90421;
-  background-color: #F29F05;
+  color: #020202;
+  background-color: #C5A5A5;
 }
 
 
@@ -297,7 +297,7 @@ a {
  }
  
  .manage_list tbody tr:hover {
-   background-color: darksalmon;
+   background-color: #F2C9C9 ;
  }
  
  .manage_list thead {
@@ -329,6 +329,10 @@ a {
 }
 
 /* 店舗 */
+.restaurant_update {
+  margin: 30px auto;
+}
+
 .restaurant_create label {
   min-width: 15%;
 }
