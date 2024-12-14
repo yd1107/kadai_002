@@ -1,5 +1,6 @@
 {% extends "layout/base.html" %}
 {% load static %}
+{% load humanize %}
 {% block title %}NAGOYAMESHI{% endblock %}
 {% block content %}
 <main>
@@ -27,13 +28,12 @@
                   <a class="nav-link active bg-primary text-white" aria-current="page" href="{% url 'restaurant_detail' object.id %}">トップ</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link link-dark" {# TODO:2#} href="{% url 'reservation_create' object.id %}">予約</a>
-                      {# href="{% url 'reservation_create' object.id %}">予約</a>#}
+                  <a class="nav-link link-dark" href="{% url 'reservation_create' object.id %}">予約</a>
+    
                 </li>
                 <li class="nav-item">
                   <a class="nav-link link-dark"
-                    {# TODO:3#} href="{% url 'review_list' object.id %}">レビュー</a>
-                    {# href="{% url 'review_list' object.id %}">レビュー</a>#}
+                    href="{% url 'review_list' object.id %}">レビュー</a>
                 </li>
               </ul>
               <div class="mb-2">
@@ -63,7 +63,7 @@
                           <span class="fw-bold">価格帯</span>
                         </div>
                           <div class="col">
-                            <span>{{ object.price }}</span>
+                            <span>{{ object.price_min | intcomma }}円 〜 {{ object.price_max | intcomma }}円 </span>
                           </div>
                         </div>
                           <div class="row pb-2 mb-2 border-bottom">

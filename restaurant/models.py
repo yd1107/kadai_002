@@ -27,7 +27,9 @@ class Restaurant(models.Model):
     """レストランモデル"""
     name = models.CharField(verbose_name='店舗名', max_length=64)
     description = models.CharField(verbose_name='説明', max_length=128)
-    price = models.CharField(verbose_name='価格帯', max_length=32)
+    #price = models.CharField(verbose_name='価格帯', max_length=32)
+    price_min = models.IntegerField(verbose_name="最低金額", default=1000)
+    price_max = models.IntegerField(verbose_name="最高金額", default=5000)
     zip_code = models.CharField(verbose_name='郵便番号', max_length=32)
     address = models.CharField(verbose_name='住所', max_length=128)
     business_time = models.CharField(verbose_name='営業時間', max_length=64)
