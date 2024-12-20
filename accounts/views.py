@@ -189,6 +189,7 @@ class ManagementRestaurantCreateView(onlyMnagementUserMixin, generic.CreateView)
 class ManagementRestaurantListView(onlyMnagementUserMixin, generic.ListView):
     template_name = "management/restaurant_manage_list.html"
     model = Restaurant
+    paginate_by = 15
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

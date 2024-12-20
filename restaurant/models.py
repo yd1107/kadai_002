@@ -117,7 +117,7 @@ class Favorite(models.Model):
 
 class Sales(models.Model):
     """売上モデル"""
-    name = models.CharField(verbose_name='売上', max_length=64, null=True, blank=True)
+    #name = models.CharField(verbose_name='売上', max_length=64, null=True, blank=True)
     year = models.IntegerField('年', default=0)
     month = models.IntegerField('月', default=0)
     amount = models.IntegerField('売上金額', default=0)

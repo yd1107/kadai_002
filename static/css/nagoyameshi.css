@@ -364,6 +364,7 @@ a {
   height: 3em;
 }
 
+
 /* 予算から探す */
 .price_search select[name="price_min"] {
   width: 70%;
@@ -383,6 +384,7 @@ a {
 /* ページ数 */
 .paginate {
   display:flex;
+  justify-content: right;
 
 }
   

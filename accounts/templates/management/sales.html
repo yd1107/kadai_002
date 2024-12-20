@@ -8,18 +8,16 @@
      <table class="sales">
          <thead>
              <tr>
-                 <th>売上</th>
                  <th>年</th>
                  <th>月</th>
-                 <th>売上額</th>
+                 <th style="text-align: center;">売上額</th>
              </tr>
          </thead>
          {% for sales in object_list %}
          <tr>
-             <td>{{ sales.name }}</td>
              <td>{{ sales.year }} 年</td>
              <td>{{ sales.month }} 月</td>
-             <td>{{ sales.amount | intcomma }} 円</td>
+             <td style="text-align: right">{{ sales.amount | intcomma }} 円</td>
          </tr>
          {% endfor %}
      </table>
