@@ -254,7 +254,7 @@ a {
   
 }
 
-.manage_main div {
+.manage_main div:first-child {
   display: flex;
   justify-content: space-between; 
   box-shadow: 0px 10px 15px -8px rgba(0, 0, 0, 0.5);
@@ -362,6 +362,28 @@ a {
 .sales tbody tr {
   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
   height: 3em;
+}
+
+/* 予算から探す */
+.price_search select[name="price_min"] {
+  width: 70%;
+  height: 40px;
+}
+
+.price_search select[name="price_max"] {
+  width: 70%;
+  height: 40px;
+}
+
+.price_search {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ページ数 */
+.paginate {
+  display:flex;
+
 }
   
    
