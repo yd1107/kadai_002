@@ -31,11 +31,10 @@
       <div class="container nagoyameshi-container">
         <h2 class="mb-3">キーワードから探す</h2>
           {#TODO:1#}
-            <form method="GET" action="{% url 'restaurant_list' %}" class="user-search-box">
-              {# <form method="GET" action="{% url 'restaurant_list' %}" class="user-search-box"> #}
+            <form method="GET" action="{% url 'restaurant_search' %}" class="user-search-box">
                 <div class="input-group">
                   <input type="text" class="form-control" placeholder="店舗名・エリア・カテゴリ" name="keyword">
-                  <input type="hidden" name="button_type" value="keyword">
+                  <input type="hidden" name="search_type" value="keyword">
                   <button type="submit" class="btn btn-primary text-white shadow-sm">検索</button>
                 </div>
             </form>
@@ -85,8 +84,7 @@
         {% for category in category_list %}
         {% if forloop.counter < 7 %}
           <div class="col"> 
-              {#TODO:3#}
-            <a href="{% url 'restaurant_list' %}?category={{ category.name }}&button_type=category" class="card-link">
+            <a href="{% url 'restaurant_search' %}?category={{ category.name }}&button_type=category" class="card-link">
                {# <a href="{% url 'restaurant_list' %}?category={{ category.name }}&button_type=category" #}
               <div class="card text-white">
                 {% if category.photo %}
@@ -105,7 +103,7 @@
       {% for category in category_list %}
       {% if forloop.counter > 6 %}
       {#TODO:4#}
-        <a href="{% url 'restaurant_list' %}?category={{ category.name }}&button_type=category" class="btn btn-outline-secondary btn-sm me-1 mb-2">{{ category.name }}</a>
+        <a href="{% url 'restaurant_search' %}?category={{ category.name }}&button_type=category" class="btn btn-outline-secondary btn-sm me-1 mb-2">{{ category.name }}</a>
       {% endif %}
       {% endfor %}
   </div>

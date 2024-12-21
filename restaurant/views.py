@@ -153,9 +153,56 @@ class RestaurantDetailView(generic.DetailView):
 
 
 
-class RestaurantListView(generic.ListView):
+class RestaurantSearchView(generic.TemplateView):
     """ レストラン一覧画面=================================="""
-    template_name = "restaurant_list.html"
+    template_name = "restaurant/restaurant_search.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # URLクエリパラメータ取得
+        search_type = self.request.GET.get("search_type") #検索種類
+        sort_request = self.request.GET.get("sort_request") #ソート要求
+
+        #ソート要求でない場合　セッション情報クリア
+        if search_type is not None:
+            self.request.session["keyword_session"] = ""
+            self.request.session["category_session"] = ""
+            self.request.session["price_min_session"] = -1
+            self.request.session["price_max_session"] = -1
+
+        #ソート情報でない場合　検索条件の内容を該当セッション変数に保存
+        if search_type is None:
+            pass
+
+        if search_type == "keyword":
+            self.request.session["keyword_session"] = self.request.GET.get("keyword")
+        elif search_type == "category":
+            self.request.session["category_session"] = self.request.GET.get("category")
+        elif search_type == "price":
+            self.request.session["price_min_session"] =self.request.GET.get("price_min")
+            self.request.session["price_max_session"] =self.request.GET.get("price_max")
+
+        print(f"keyword_session: {self.request.session['keyword_session']}")
+        print(f"category_session: {self.request.session['category_session']}")
+        print(f"price_min_session: {self.request.session['price_min_session']}")
+        print(f"price_max_session: {self.request.session['price_max_session']}")
+
+        context = {
+            "category_selected": "和食",
+            "price_min_session": 0,
+            "price_max_session": 0,
+
+
+            "category_list" : models.Category.objects.all()
+        }
+
+
+        return context
+
+
+
+    '''
     model = models.Restaurant
 
     def get_context_data(self, **kwargs):
@@ -217,7 +264,7 @@ class RestaurantListView(generic.ListView):
                 if data["price_min"] >= price_min_session and data["price_max"] <= price_max_session:
                     target_id_list.append(data['id'])
 
-                '''
+                
                 price_str = data['price']
                 price_str = price_str.replace('円','')
                 price_str = price_str.replace(',','')
@@ -226,7 +273,7 @@ class RestaurantListView(generic.ListView):
                 if int(price_list[0]) <= int(price_session) <= int(price_list[1]):
                     target_id_list.append(data['id'])
 
-                '''    
+                 
             restaurant_list = restaurant_list.filter(id__in=target_id_list)
 
         # 表示順
@@ -263,6 +310,8 @@ class RestaurantListView(generic.ListView):
             'restaurant_list': zip(restaurant_list, average_rate_list,average_rate_star_list, rate_num_list),
          })
         return context
+
+'''
 
 class FavoriteListView(generic.ListView):
     """ お気に入り一覧画面=================================="""
