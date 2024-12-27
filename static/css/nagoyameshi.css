@@ -379,6 +379,7 @@ a {
 .price_search {
   display: flex;
   justify-content: space-between;
+
 }
 
 /* ページ数 */
@@ -388,4 +389,4 @@ a {
 
 }
   
-   
+
