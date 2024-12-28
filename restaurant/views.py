@@ -160,41 +160,55 @@ class RestaurantSearchView(generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        _session = self.request.session
+
         # URLクエリパラメータ取得
         search_type = self.request.GET.get("search_type") #検索種類
         sort_request = self.request.GET.get("sort_request") #ソート要求
 
         #ソート要求でない場合　セッション情報クリア
         if search_type is not None:
-            self.request.session["keyword_session"] = ""
-            self.request.session["category_session"] = ""
-            self.request.session["price_min_session"] = -1
-            self.request.session["price_max_session"] = -1
+            _session["keyword"] = ""
+            _session["category"] = ""
+            _session["price_min"] = -1
+            _session["price_max"] = -1
 
         #ソート情報でない場合　検索条件の内容を該当セッション変数に保存
+        restaurant_list = []
+
         if search_type is None:
             pass
-
         if search_type == "keyword":
-            self.request.session["keyword_session"] = self.request.GET.get("keyword")
-        elif search_type == "category":
-            self.request.session["category_session"] = self.request.GET.get("category")
-        elif search_type == "price":
-            self.request.session["price_min_session"] =self.request.GET.get("price_min")
-            self.request.session["price_max_session"] =self.request.GET.get("price_max")
+            _session["keyword"] = self.request.GET.get("keyword")
 
-        print(f"keyword_session: {self.request.session['keyword_session']}")
-        print(f"category_session: {self.request.session['category_session']}")
-        print(f"price_min_session: {self.request.session['price_min_session']}")
-        print(f"price_max_session: {self.request.session['price_max_session']}")
+            restaurant_list = models.Restaurant.objects.filter(
+                Q(name__icontains=_session["keyword"]) |
+                Q(category__name__icontains=_session["keyword"]) |
+                Q(address__icontains=_session["keyword"])
+            )
+
+        elif search_type == "category":
+            _session["category"] = self.request.GET.get("category")
+
+            restaurant_list = models.Restaurant.objects.filter(category__name=_session["category"])
+
+        elif search_type == "price":
+            _session["price_min"] =int(self.request.GET.get("price_min"))
+            _session["price_max"] =int(self.request.GET.get("price_max"))
+
+            restaurant_list = models.Restaurant.objects.filter(
+                price_min__gte=_session["price_min"], price_max__lte=_session["price_max"])
+
 
         context = {
-            "category_selected": "和食",
-            "price_min_session": 0,
-            "price_max_session": 0,
+            "keyword": _session["keyword"],
+            "category_selected": _session["category"],
+            "price_min": _session["price_min"],
+            "price_max": _session["price_max"],
 
 
-            "category_list" : models.Category.objects.all()
+            "category_list" : models.Category.objects.all(),
+            "restaurant_list": restaurant_list,
         }
 
 

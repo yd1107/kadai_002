@@ -15,7 +15,7 @@
         <div class="col-xl-3 col-lg-4 col-md-12">
           <form method="GET" class="w-100 mb-3">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="店舗名・エリア・カテゴリ" name="keyword" value={% if keyword_input %}{{ keyword_input }}{% else %}""{% endif %}> 
+              <input type="text" class="form-control" placeholder="店舗名・エリア・カテゴリ" name="keyword" value={% if keyword %}{{ keyword }}{% else %}""{% endif %}> 
               <input type="hidden" name="search_type" value="keyword">
               <button type="submit" class="btn btn-primary text-white shadow-sm">検索</button>
             </div>
@@ -52,52 +52,52 @@
                               <p>最低金額</p>
                               <select class="form-control form-select" name="price_min" required>
                                 <option value="">下限</option>
-                                <option value="500" {% if price_min_session == 500 %}selected{% endif %}>500円</option>
-                                  <option value="1000" {% if price_min_session == 1000 %}selected{% endif %}>1,000円</option>
-                                  <option value="1500" {% if price_min_session == 1500 %}selected{% endif %}>1,500円</option>
-                                  <option value="2000" {% if price_min_session == 2000 %}selected{% endif %}>2,000円</option>
-                                  <option value="2500" {% if price_min_session == 2500 %}selected{% endif %}>2,500円</option>
-                                  <option value="3000" {% if price_min_session == 3000 %}selected{% endif %}>3,000円</option>
-                                  <option value="3500" {% if price_min_session == 3500 %}selected{% endif %}>3,500円</option>
-                                  <option value="4000" {% if price_min_session == 4000 %}selected{% endif %}>4,000円</option>
-                                  <option value="4500" {% if price_min_session == 4500 %}selected{% endif %}>4,500円</option>
-                                  <option value="5000" {% if price_min_session == 5000 %}selected{% endif %}>5,000円</option>
-                                  <option value="5500" {% if price_min_session == 5500 %}selected{% endif %}>5,500円</option>
-                                  <option value="6000" {% if price_min_session == 6000 %}selected{% endif %}>6,000円</option>
-                                  <option value="6500" {% if price_min_session == 6500 %}selected{% endif %}>6,500円</option>
-                                  <option value="7000" {% if price_min_session == 7000 %}selected{% endif %}>7,000円</option>
-                                  <option value="7500" {% if price_min_session == 7500 %}selected{% endif %}>7,500円</option>
-                                  <option value="8000" {% if price_min_session == 8000 %}selected{% endif %}>8,000円</option>
-                                  <option value="8500" {% if price_min_session == 8500 %}selected{% endif %}>8,500円</option>
-                                  <option value="9000" {% if price_min_session == 9000 %}selected{% endif %}>9,000円</option>
-                                  <option value="9500" {% if price_min_session == 9500 %}selected{% endif %}>9,500円</option>
-                                  <option value="10000" {% if price_min_session == 10000 %}selected{% endif %}>10,000円</option>
+                                <option value="500" {% if price_min == 500 %}selected{% endif %}>500円</option>
+                                  <option value="1000" {% if price_min == 1000 %}selected{% endif %}>1,000円</option>
+                                  <option value="1500" {% if price_min == 1500 %}selected{% endif %}>1,500円</option>
+                                  <option value="2000" {% if price_min == 2000 %}selected{% endif %}>2,000円</option>
+                                  <option value="2500" {% if price_min == 2500 %}selected{% endif %}>2,500円</option>
+                                  <option value="3000" {% if price_min == 3000 %}selected{% endif %}>3,000円</option>
+                                  <option value="3500" {% if price_min == 3500 %}selected{% endif %}>3,500円</option>
+                                  <option value="4000" {% if price_min == 4000 %}selected{% endif %}>4,000円</option>
+                                  <option value="4500" {% if price_min == 4500 %}selected{% endif %}>4,500円</option>
+                                  <option value="5000" {% if price_min == 5000 %}selected{% endif %}>5,000円</option>
+                                  <option value="5500" {% if price_min == 5500 %}selected{% endif %}>5,500円</option>
+                                  <option value="6000" {% if price_min == 6000 %}selected{% endif %}>6,000円</option>
+                                  <option value="6500" {% if price_min == 6500 %}selected{% endif %}>6,500円</option>
+                                  <option value="7000" {% if price_min == 7000 %}selected{% endif %}>7,000円</option>
+                                  <option value="7500" {% if price_min == 7500 %}selected{% endif %}>7,500円</option>
+                                  <option value="8000" {% if price_min == 8000 %}selected{% endif %}>8,000円</option>
+                                  <option value="8500" {% if price_min == 8500 %}selected{% endif %}>8,500円</option>
+                                  <option value="9000" {% if price_min == 9000 %}selected{% endif %}>9,000円</option>
+                                  <option value="9500" {% if price_min == 9500 %}selected{% endif %}>9,500円</option>
+                                  <option value="10000" {% if price_min == 10000 %}selected{% endif %}>10,000円</option>
                             </select>
                           </div>
                           <div class="price_search">
                               <p>最高金額</p>
                                 <select class="form-control form-select" name="price_max" required>
                                   <option value="">上限</option>
-                                  <option value="500" {% if price_max_session == 500 %}selected{% endif %}>500円</option>
-                                    <option value="1000" {% if price_max_session == 1000 %}selected{% endif %}>1,000円</option>
-                                    <option value="1500" {% if price_max_session == 1500 %}selected{% endif %}>1,500円</option>
-                                    <option value="2000" {% if price_max_session == 2000 %}selected{% endif %}>2,000円</option>
-                                    <option value="2500" {% if price_max_session == 2500 %}selected{% endif %}>2,500円</option>
-                                    <option value="3000" {% if price_max_session == 3000 %}selected{% endif %}>3,000円</option>
-                                    <option value="3500" {% if price_max_session == 3500 %}selected{% endif %}>3,500円</option>
-                                    <option value="4000" {% if price_max_session == 4000 %}selected{% endif %}>4,000円</option>
-                                    <option value="4500" {% if price_max_session == 4500 %}selected{% endif %}>4,500円</option>
-                                    <option value="5000" {% if price_max_session == 5000 %}selected{% endif %}>5,000円</option>
-                                    <option value="5500" {% if price_max_session == 5500 %}selected{% endif %}>5,500円</option>
-                                    <option value="6000" {% if price_max_session == 6000 %}selected{% endif %}>6,000円</option>
-                                    <option value="6500" {% if price_max_session == 6500 %}selected{% endif %}>6,500円</option>
-                                    <option value="7000" {% if price_max_session == 7000 %}selected{% endif %}>7,000円</option>
-                                    <option value="7500" {% if price_max_session == 7500 %}selected{% endif %}>7,500円</option>
-                                    <option value="8000" {% if price_max_session == 8000 %}selected{% endif %}>8,000円</option>
-                                    <option value="8500" {% if price_max_session == 8500 %}selected{% endif %}>8,500円</option>
-                                    <option value="9000" {% if price_max_session == 9000 %}selected{% endif %}>9,000円</option>
-                                    <option value="9500" {% if price_max_session == 9500 %}selected{% endif %}>9,500円</option>
-                                    <option value="10000" {% if price_max_session == 10000 %}selected{% endif %}>10,000円</option>
+                                  <option value="500" {% if price_max == 500 %}selected{% endif %}>500円</option>
+                                    <option value="1000" {% if price_max == 1000 %}selected{% endif %}>1,000円</option>
+                                    <option value="1500" {% if price_max == 1500 %}selected{% endif %}>1,500円</option>
+                                    <option value="2000" {% if price_max == 2000 %}selected{% endif %}>2,000円</option>
+                                    <option value="2500" {% if price_max == 2500 %}selected{% endif %}>2,500円</option>
+                                    <option value="3000" {% if price_max == 3000 %}selected{% endif %}>3,000円</option>
+                                    <option value="3500" {% if price_max == 3500 %}selected{% endif %}>3,500円</option>
+                                    <option value="4000" {% if price_max == 4000 %}selected{% endif %}>4,000円</option>
+                                    <option value="4500" {% if price_max == 4500 %}selected{% endif %}>4,500円</option>
+                                    <option value="5000" {% if price_max == 5000 %}selected{% endif %}>5,000円</option>
+                                    <option value="5500" {% if price_max == 5500 %}selected{% endif %}>5,500円</option>
+                                    <option value="6000" {% if price_max == 6000 %}selected{% endif %}>6,000円</option>
+                                    <option value="6500" {% if price_max == 6500 %}selected{% endif %}>6,500円</option>
+                                    <option value="7000" {% if price_max == 7000 %}selected{% endif %}>7,000円</option>
+                                    <option value="7500" {% if price_max == 7500 %}selected{% endif %}>7,500円</option>
+                                    <option value="8000" {% if price_max == 8000 %}selected{% endif %}>8,000円</option>
+                                    <option value="8500" {% if price_max == 8500 %}selected{% endif %}>8,500円</option>
+                                    <option value="9000" {% if price_max == 9000 %}selected{% endif %}>9,000円</option>
+                                    <option value="9500" {% if price_max == 9500 %}selected{% endif %}>9,500円</option>
+                                    <option value="10000" {% if price_max == 10000 %}selected{% endif %}>10,000円</option>
                               </select>
                           </div> 
                         </div>
@@ -112,7 +112,7 @@
               <div class="col">
                 <div class="d-flex justify-content-between flex-wrap">
                  <p class="fs-5 mb-3">
-                  {# {{ restaurant_list.count }}件の店舗が見つかりました<span class="fs-6"> </span> #}
+                  {{ restaurant_list.count }}件の店舗が見つかりました<span class="fs-6"> </span>
                 </p>
                   <form method="GET" class="mb-3 sort-box">
                     <select class="form-select form-select-sm" name="select_sort" aria-label=".form-select-sm example" onChange="this.form.submit();">
@@ -124,6 +124,41 @@
                      <input type="hidden" name="sourt_request" value="true">
                   </form>
               </div>
+
+              {% for restaurant in restaurant_list %}
+                <div class="mb-3">
+                  <a href="{% url 'restaurant_detail' restaurant.id %}" class="link-dark card-link">
+                    <div class="card h-100">
+                      <div class="row g-0">
+                       <div class="col-md-4">
+                        {% if restaurant.photo %}
+                        <img src="{{ restaurant.photo.url }}" class="card-img-top horizontal-card-image">
+                        {% endif %}
+                        </div>
+                        <div class="col-md-8">
+                         <div class="card-body">
+                          <h3 class="card-title">{{ restaurant.name }}</h3>
+                            <div class="col d-flex text-secondary">
+                             <div>
+                              {{ restaurant.category }}
+                             </div>
+                            </div>
+                            <hr class="my-2">
+                            <p class="mb-1">
+                              <span class="star-rating me-1" data-rate="{{ rate_star }}"></span>
+                              {# {{ rate }} （{{ rate_num }} #} 件）
+                            </p>
+                            <div class="mb-1">
+                              <span>{{ restaurant.price }}</span>
+                            </div>
+                            <p class="card-text">{{ restaurant.description }}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              {% endfor %}
                 
         <div class="d-flex justify-content-center"></div>
       </div>
