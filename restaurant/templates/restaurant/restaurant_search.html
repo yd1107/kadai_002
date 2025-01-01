@@ -1,5 +1,6 @@
 {% extends "layout/base.html" %}
 {% load static %}
+{% load humanize %}
 {% block title %}NAGOYAMESHI{% endblock %}
 {% block content %}
 
@@ -152,6 +153,11 @@
                               <span>{{ restaurant.price }}</span>
                             </div>
                             <p class="card-text">{{ restaurant.description }}</p>
+                            <div class="card-price">
+                              <p>価格帯：</p>
+                              {{ restaurant.price_min | intcomma }}円〜 {{ restaurant.price_max | intcomma }}円
+                            </div>
+                            <p>掲載日</p>
                           </div>
                         </div>
                       </div>

@@ -20,11 +20,9 @@
   </table>
 
   <a class="new" href="{% url 'category_create' %}">カテゴリー新規登録</a><br>
-  
-  {# ページの表示 #}
-  {{ page_obj.number }} / {{ page_obj.paginator.num_pages }} ページ
-
-      <div class="paginate">
+  <div class="paginate">
+    {# ページの表示 #}
+    {{ page_obj.number }} / {{ page_obj.paginator.num_pages }} ページ
      
         {# 前へ #}
         {% if page_obj.has_previous %}
@@ -37,7 +35,7 @@
           <a href="?page={{ page_obj.next_page_number }}">次へ</a>
           <a href="?page={{ page_obj.paginator.num_pages }}">最後 &raquo;</a>
         {% endif %}
-      </div>
+  </div>
 
 
 {% endblock %}

@@ -343,9 +343,10 @@ a {
 }
 
 .new {
-  display: block;
-  padding:0px 0px 20px  500px;  
-   
+  display: block !important;
+  width: 70% !important;
+  margin: 0 auto !important;
+  color: #0421D9 !important;
 }
 
 .sales {
@@ -384,9 +385,12 @@ a {
 
 /* ページ数 */
 .paginate {
-  display:flex;
-  justify-content: right;
-
+  display:flex !important;
+  justify-content: right !important;
 }
   
-
+/* カード価格帯表示 */
+.card-price {
+  display: flex;
+  justify-content: left;
+}
