@@ -157,7 +157,7 @@
                               <p>価格帯：</p>
                               {{ restaurant.price_min | intcomma }}円〜 {{ restaurant.price_max | intcomma }}円
                             </div>
-                            <p>掲載日</p>
+                            <p>掲載日：{{ restaurant.created_at|date:"Y年m月d日" }}</p>
                           </div>
                         </div>
                       </div>

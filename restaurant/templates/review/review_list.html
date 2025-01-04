@@ -100,15 +100,15 @@
               {% endif %}
               <!-- 有料プランに登録しておらず、レビュー数が3件を超えていれば表示する -->
               <!-- 有料プランに登録しており、レビューを投稿済みでなければ表示する -->
-              {% if not is_posted %}
-              <div class="text-center mt-3">
-              {# TODO:2#}<a href="{% url 'review_create' restaurant.id %}"
-              {# <a href="{% url 'review_create' restaurant.id %}" #}class="btn btn-primary text-white shadow-sm w-50">レビューを投稿する</a>
-            </div>
-            {% endif %}
+
         </div>
       </div>
     </div>
+    {% if not is_posted %}
+      <div class="text-center mt-3">
+      <a href="{% url 'review_create' restaurant.id %}" class="btn btn-primary text-white shadow-sm w-50">レビューを投稿する</a>
+      </div>
+    {% endif %}
 </main>
 {% endblock %}
 {% block js_script %}
