@@ -42,6 +42,12 @@ class Command(BaseCommand):
         for _ in range(5):
             name = fake.name()
             email = fake.email()
+            zip_code = fake.zipcode() 
+            address = fake.address()
+            phone_number = fake.phone_number()
+            job = fake.job()
+
+
 
             last_name = name.split(' ')[0]
             last_kana = KanaFromKanji(last_name)
@@ -59,5 +65,8 @@ class Command(BaseCommand):
 
             email = first_roman + "." + last_roman + "@" + email.split("@")[1]
 
+
+
             print(f"{last_name} {first_name} / {last_kana} {first_kana} / "
-                    f"{email}")
+                  f"{email} / " f"{address} / " f"{zip_code} / " f"{phone_number} / " f"{job} ") 
+                    

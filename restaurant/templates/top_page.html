@@ -19,30 +19,33 @@
           <div class="d-flex align-items-center overlay-background">
             <div class="container nagoyameshi-containeroverlay-text">
               <h1 class="text-white catchphrase-heading">名古屋ならではの味を、<br>見つけよう</h1>
-                <p class="text-white catchphrase-paragraph">NAGOYAMESHIは、<br>名古屋市のB級グルメ専門のレビューサイトです。</p>
+              <p class="text-white catchphrase-paragraph">NAGOYAMESHIは、<br>名古屋市のB級グルメ専門のレビューサイトです。</p>
+
+              {# キーワードから探す #}
+              {# <div class="bg-light mb-4 py-4"> #}
+              <div class="mb-4 py-4 text-white w-75">
+                <div class="container nagoyameshi-container">
+                  <h2 class="mb-3">キーワードから探す</h2>
+                    <form method="GET" action="{% url 'restaurant_search' %}" class="user-search-box">
+                          <div class="input-group">
+                            <input type="text" class="form-control" placeholder="店舗名・エリア・カテゴリ" name="keyword">
+                            <input type="hidden" name="search_type" value="keyword">
+                            <button type="submit" class="btn btn-primary text-white shadow-sm">検索</button>
+                          </div>
+                    </form>
+                </div>
+              </div>
             </div>
         </div>
       </div>
     </div>
    </div>
 
-   {# キーワードから探す #}
-    <div class="bg-light mb-4 py-4">
-      <div class="container nagoyameshi-container">
-        <h2 class="mb-3">キーワードから探す</h2>
-            <form method="GET" action="{% url 'restaurant_search' %}" class="user-search-box">
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="店舗名・エリア・カテゴリ" name="keyword">
-                  <input type="hidden" name="search_type" value="keyword">
-                  <button type="submit" class="btn btn-primary text-white shadow-sm">検索</button>
-                </div>
-            </form>
-        </div>
-    </div>
+ 
     
 {# 評価が高いお店 #}
   <div class="container nagoyameshi-container">
-    <h2 class="mb-3">評価が高いお店</h2>
+    <h2 class="mt-5 ">評価が高いお店</h2>
       <div class="row row-cols-xl-6 row-cols-md-3 row-cols-2 g-3 mb-5">
         {% for restaurant, rate, rate_star in restaurant_list %}
           <div class="col">
