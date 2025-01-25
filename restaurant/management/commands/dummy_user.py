@@ -75,10 +75,12 @@ class Command(BaseCommand):
 
             if user_name in dic_username:
                 continue
+            
+            print(user_name)
+            
+            dic_username[user_name] = user_name
 
-            dic_username[user_name] = email
-
-            if i >= 5:
+            if i >= 100: 
                 break
 
             i = i + 1

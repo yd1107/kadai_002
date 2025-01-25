@@ -14,7 +14,8 @@ class Category(models.Model):
     photo = models.ImageField(verbose_name='写真', blank=True, null=True)
     
     class Meta:
-        verbose_name_plural = 'Category'
+        verbose_name = 'カテゴリー'
+        verbose_name_plural = 'カテゴリー'
 
     def __str__(self):
         return self.name
@@ -45,7 +46,8 @@ class Restaurant(models.Model):
     updated_at = models.DateTimeField(verbose_name='更新日時', auto_now=True)
     
     class Meta:
-        verbose_name_plural = 'Restaurant'
+        verbose_name = 'レストラン'
+        verbose_name_plural = 'レストラン'
     def __str__(self):
         return self.name
 
@@ -82,7 +84,8 @@ class Reservation(models.Model):
     updated_at = models.DateTimeField(verbose_name='予約更新日時', auto_now=True)
 
     class Meta:
-        verbose_name_plural = 'Reservation'
+        verbose_name = '予約'
+        verbose_name_plural = '予約'
 
     def __str__(self):
         return self.restaurant.name
@@ -99,7 +102,8 @@ class Review(models.Model):
     updated_at = models.DateTimeField(verbose_name='レビュー更新日時',auto_now=True)
     
     class Meta:
-        verbose_name_plural = 'Review'
+        verbose_name = 'レビュー'
+        verbose_name_plural = 'レビュー'
     def __str__(self):
         return self.restaurant.name
 
@@ -111,7 +115,8 @@ class Favorite(models.Model):
     updated_at = models.DateTimeField(verbose_name='お気に入り更新日時',auto_now=True)
     
     class Meta:
-        verbose_name_plural = 'Favorite'
+        verbose_name= 'お気に入り'
+        verbose_name_plural = 'お気に入り'
     def __str__(self):
         return self.restaurant.name
 
@@ -122,7 +127,8 @@ class Sales(models.Model):
     amount = models.IntegerField('売上金額', default=0)
 
     class Meta:
-        verbose_name_plural = 'Sales'
+        verbose_name = '売上'
+        verbose_name_plural = '売上'
 
     def __str__(self):
         return self.name
