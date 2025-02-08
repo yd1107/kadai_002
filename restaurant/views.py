@@ -13,14 +13,12 @@ from . import models
 from . import forms
 
 
-
-
-class TopPageView(generic.ListView):
+class TopPageView(generic.TemplateView):
     """ トップ画面=================================="""
     template_name = "top_page.html"
-    model = models.Restaurant
-    queryset = models.Restaurant.objects.order_by('-rate')
-    context_object_name = 'restaurant_list'
+    # model = models.Restaurant
+    # queryset = models.Restaurant.objects.order_by('-rate')
+    # context_object_name = 'restaurant_list'
 
     def get_context_data(self, **kwargs):
         if 'price_min_session' in self.request.session:
@@ -38,30 +36,30 @@ class TopPageView(generic.ListView):
         if 'select_sort' in self.request.session:
             self.request.session['select_sort'] = '-created_at'
 
-        context = super(TopPageView, self).get_context_data(**kwargs)
+        # context = super(TopPageView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
+
+        #　カテゴリー一覧取得
         category_list = models.Category.objects.all()
-        new_restaurant_list = models.Restaurant.objects.all().order_by('-created_at')
 
-        # querysetに含まれるレストランの平均レートを、レストランごとに取得して配列に格納
-        average_rate_list = []
-        average_rate_star_list = []
+        #新規掲載店取得
+        new_restaurant_list = models.Restaurant.objects.all().order_by("-created_at")[:6]
 
-        for restaurant in context['restaurant_list']:
-            average_rate = models.Review.objects.filter(restaurant=restaurant).aggregate(Avg('rate'))
-            average_rate = average_rate['rate__avg'] if average_rate['rate__avg'] is not None else 0 
-            average_rate_list.append(round(average_rate, 2))
+        review_list = models.Review.objects.values("restaurant").annotate(rate_ave=Avg("rate")).order_by("-rate_ave")[:6]
 
-            if average_rate % 1 == 0:
-                average_rate = int(average_rate)
-            else:
-                average_rate = round(average_rate * 2) / 2
-            average_rate_star_list.append(average_rate)
+        restaurant_list = []
+
+        for review in review_list:
+            val = models.Restaurant.objects.filter(pk=review['restaurant']).get()
+            val.rate_ave = review['rate_ave']
+            restaurant_list.append(val)
 
         context.update({
             'category_list': category_list,
             'new_restaurant_list': new_restaurant_list,
-            'restaurant_list': zip(self.queryset, average_rate_list, average_rate_star_list),
+            'restaurant_list': restaurant_list,
         })
+
         return context
 
 

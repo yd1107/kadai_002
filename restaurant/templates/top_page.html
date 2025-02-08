@@ -47,7 +47,7 @@
   <div class="container nagoyameshi-container">
     <h2 class="mt-5 ">評価が高いお店</h2>
       <div class="row row-cols-xl-6 row-cols-md-3 row-cols-2 g-3 mb-5">
-        {% for restaurant, rate, rate_star in restaurant_list %}
+        {% for restaurant in restaurant_list %}
           <div class="col">
               <a href=" {% url 'restaurant_detail' restaurant.id %}" class="link-dark card-link">
                     <div class="card h-100">
@@ -62,8 +62,8 @@
                               </div>
                             </div>
                               <p class="card-text">
-                                  <span class="star-rating me-1" data-rate="{{ rate_star }}"></span>
-                                  {{ rate }}
+                                  <span class="star-rating me-1" data-rate="{{ restaurant.rate_ave|floatformat:0 }}"></span>
+                                  {{ restaurant.rate_ave|floatformat }}
                               </p>
                             </div>
                         </div>  
