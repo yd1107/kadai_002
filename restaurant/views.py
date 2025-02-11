@@ -83,71 +83,60 @@ class RestaurantDetailView(generic.DetailView):
         user = self.request.user
         pk = self.kwargs['pk']
         
-        context = super(RestaurantDetailView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         
         restaurant = models.Restaurant.objects.filter(id=pk).first()
         
         is_favorite = False
+
         if user.is_authenticated:
             is_favorite = models.Favorite.objects.filter(user=user).filter(
-                restaurant=models.Restaurant.objects.get(pk=pk)).exists()
-        average_rate = models.Review.objects.filter(restaurant=restaurant).aggregate(Avg('rate'))
-        average_rate = average_rate['rate__avg'] if average_rate['rate__avg'] is not None else 0
-        average_rate = round(average_rate, 2)
-        if average_rate % 1 == 0:
-            average_rate_star = int(average_rate)
-        else:
-            average_rate_star = round(average_rate * 2) / 2
+                restaurant=restaurant).exists()
+        
+        review_obj = models.Review.objects.filter(restaurant=restaurant).aggregate(Avg('rate'))
+        average_rate = review_obj['rate__avg'] if review_obj['rate__avg'] is not None else 0
+
         rate_count = models.Review.objects.filter(restaurant=restaurant).count()
+
         context.update({
             'is_favorite': is_favorite,
             'average_rate': average_rate,
-            'average_rate_star': average_rate_star,
             'rate_count': rate_count,
         })
+
         return context
+
     def post(self, request, **kwargs):
         user = request.user
+
         if not user.is_authenticated:
             return redirect(reverse_lazy('account_login'))
+
         if not user.is_subscribed:
             return redirect(reverse_lazy('subscribe_register'))
+
         pk = kwargs['pk']
+        restaurant = models.Restaurant.objects.filter(id=pk).first()
+
         is_favorite = models.Favorite.objects.filter(user=user).filter(
-            restaurant=models.Restaurant.objects.get(pk=pk)).exists()
+            restaurant=restaurant).exists()
+
         if is_favorite:
             models.Favorite.objects.filter(user=user).filter(
-                restaurant=models.Restaurant.objects.get(pk=pk)).delete() 
+                restaurant=restaurant).delete() 
             is_favorite = False
 
         else:
             favorite = models.Favorite()
-            user = request.user
-            favorite.restaurant = models.Restaurant.objects.get(pk=pk)
+            favorite.restaurant = restaurant
             favorite.user = user
             favorite.save()
             is_favorite = True
 
-        restaurant = models.Restaurant.objects.filter(id=pk).first()
-        average_rate = models.Review.objects.filter(restaurant=restaurant).aggregate(Avg('rate'))
-        average_rate = average_rate['rate__avg'] if average_rate['rate__avg'] is not None else 0
-        average_rate = round(average_rate, 2)
-        if average_rate % 1 == 0:
-            average_rate_star = int(average_rate)
-        else:
-            average_rate_star = round(average_rate * 2) / 2
+        self.object = restaurant
+        context = self.get_context_data(**kwargs)
 
-        rate_count = models.Review.objects.filter(restaurant=restaurant).count()
-
-        context = {
-        'object': models.Restaurant.objects.get(pk=kwargs['pk']),
-        'is_favorite': is_favorite,
-        'average_rate': average_rate,
-        'average_rate_star': average_rate_star,
-        'rate_count': rate_count,
-        }
         return render(request, self.template_name, context)
-
 
 
 
