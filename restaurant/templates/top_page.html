@@ -22,7 +22,6 @@
               <p class="text-white catchphrase-paragraph">NAGOYAMESHIは、<br>名古屋市のB級グルメ専門のレビューサイトです。</p>
 
               {# キーワードから探す #}
-              {# <div class="bg-light mb-4 py-4"> #}
               <div class="mb-4 py-4 text-white w-75">
                 <div class="container nagoyameshi-container">
                   <h2 class="mb-3">キーワードから探す</h2>
@@ -78,7 +77,7 @@
         {% for category in category_list %}
         {% if forloop.counter < 7 %}
           <div class="col"> 
-            <a href="{% url 'restaurant_search' %}?category={{ category.name }}&button_type=category" class="card-link">
+            <a href="{% url 'restaurant_search' %}?category={{ category.name }}&search_type=category" class="card-link">
               <div class="card text-white">
                 {% if category.photo %}
                   <img src="{{ category.photo.url }} " class="card-img vertical-card-image" alt="{{ category.name }}">
@@ -95,7 +94,7 @@
   <div class="mb-5">
       {% for category in category_list %}
       {% if forloop.counter > 6 %}  
-        <a href="{% url 'restaurant_search' %}?category={{ category.name }}&button_type=category" class="btn btn-outline-secondary btn-sm me-1 mb-2">{{ category.name }}</a>
+        <a href="{% url 'restaurant_search' %}?category={{ category.name }}&search_type=category" class="btn btn-outline-secondary btn-sm me-1 mb-2">{{ category.name }}</a>
       {% endif %}
       {% endfor %}
   </div>
