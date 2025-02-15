@@ -28,7 +28,6 @@ class Restaurant(models.Model):
     """レストランモデル"""
     name = models.CharField(verbose_name='店舗名', max_length=64)
     description = models.CharField(verbose_name='説明', max_length=128)
-    #price = models.CharField(verbose_name='価格帯', max_length=32)
     price_min = models.IntegerField(verbose_name="最低金額", default=1000)
     price_max = models.IntegerField(verbose_name="最高金額", default=5000)
     zip_code = models.CharField(verbose_name='郵便番号', max_length=32)
@@ -37,10 +36,6 @@ class Restaurant(models.Model):
     close_day_of_week = models.CharField(verbose_name='定休日', max_length=32)
     seats_number = models.CharField(verbose_name='座席数', max_length=32)
     category = models.ForeignKey(Category, verbose_name='カテゴリー', on_delete=models.PROTECT)
-
-    rate = models.FloatField(verbose_name='レート', default=0.0)
-    review_num = models.IntegerField(verbose_name='レビュー数', default=0)
-    reservation_num = models.IntegerField(verbose_name='予約数', default=0)
     photo = models.ImageField(verbose_name='写真', blank=True, null=True)
     created_at = models.DateTimeField(verbose_name='作成日時', auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name='更新日時', auto_now=True)
@@ -52,7 +47,7 @@ class Restaurant(models.Model):
         return self.name
 
     def get_absolute_url(self):
-         return reverse('restaurant_list')
+        return reverse('restaurant_list')
 
 class Reservation(models.Model):
     """予約モデル"""
