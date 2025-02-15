@@ -146,8 +146,8 @@
                             </div>
                             <hr class="my-2">
                             <p class="mb-1">
-                              <span class="star-rating me-1" data-rate="{{ rate_star }}"></span>
-                              {# {{ rate }} （{{ rate_num }} #} 件）
+                              <span class="star-rating me-1" data-rate="{{restaurant.rate|floatformat:0}}"></span>
+                              {{restaurant.rate|floatformat}} （{{ restaurant.review_num }} 件）
                             </p>
                             <div class="mb-1">
                               <span>{{ restaurant.price }}</span>
