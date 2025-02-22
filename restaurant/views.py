@@ -1,4 +1,5 @@
 from datetime import date
+from operator import attrgetter
 
 from django.db.models import Avg
 from django.db.models import Q
@@ -34,7 +35,7 @@ class TopPageView(generic.TemplateView):
             self.request.session['category_session'] = ''
 
         if 'select_sort' in self.request.session:
-            self.request.session['select_sort'] = '-created_at'
+            self.request.session['select_sort'] = 'created_at'
 
         # context = super(TopPageView, self).get_context_data(**kwargs)
         context = super().get_context_data(**kwargs)
@@ -166,8 +167,16 @@ class RestaurantSearchView(generic.TemplateView):
             elif search_type == "price":
                 _session["price_min"] = int(self.request.GET.get("price_min"))
                 _session["price_max"] = int(self.request.GET.get("price_max"))
+
+            #　ソート条件初期化
+            _session["date_salected"] = "selected"
+            _session["price_selected"] = ""
+            _session["rate_selected"] = ""
+            select_sort = "created_at"
+            sort_reverse = True
             
         else:                           # ソート要求の場合
+            #　検索条件
             if _session["price_min"] != -1 or _session["price_max"] != -1:
                 search_type = "price"
             elif _session["category"] != "":
@@ -175,6 +184,24 @@ class RestaurantSearchView(generic.TemplateView):
             else:
                 search_type = "keyword"
         
+            #　ソート条件
+            _session["date_salected"] = ""
+            _session["price_selected"] = ""
+            _session["rate_selected"] = ""
+
+            select_sort = self.request.GET.get("select_sort")
+
+            if select_sort == "created_at":
+                _session["date_selected"] = "selected"
+                sort_reverse = True
+
+            elif select_sort == "price_min":
+                _session["price_selected"] = "selected"
+                sort_reverse = False
+            else:
+                _session["rate_selected"] = "selected"
+                sort_reverse = True
+            
 
         # ソート情報でない場合 検索条件の内容を該当セッション変数に保存
         restaurant_list = []
@@ -193,19 +220,25 @@ class RestaurantSearchView(generic.TemplateView):
             condition = Q(price_min__gte=_session["price_min"], price_max__lte=_session["price_max"])
 
         restaurant_list = models.Restaurant.objects.filter(condition)
-        restaurant_list = restaurant_list.order_by("-created_at")
 
         for restaurant in restaurant_list:
             review_obj = models.Review.objects.filter(restaurant=restaurant).aggregate(Avg('rate'))
-            restaunrat_rate = review_obj['rate__avg'] if review_obj['rate__avg'] is not None else 0
+            restaurant.rate = review_obj['rate__avg'] if review_obj['rate__avg'] is not None else 0
 
             restaurant.review_num = models.Review.objects.filter(restaurant=restaurant).count()
+        
+        restaurant_list = list(restaurant_list)
+        restaurant_list.sort(key=attrgetter(select_sort), reverse=sort_reverse)
 
         context = {
             "keyword": _session["keyword"],
             "category_selected": _session["category"],
             "price_min": _session["price_min"],
             "price_max": _session["price_max"],
+
+            "date_selected": _session["date_selected"],
+            "price_selected": _session["price_selected"],
+            "rate_selected": _session["rate_selected"],
             
             "category_list": models.Category.objects.all(),
             "restaurant_list": restaurant_list,
