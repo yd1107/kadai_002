@@ -169,7 +169,7 @@ class RestaurantSearchView(generic.TemplateView):
                 _session["price_max"] = int(self.request.GET.get("price_max"))
 
             #　ソート条件初期化
-            _session["date_salected"] = "selected"
+            _session["date_selected"] = "selected"
             _session["price_selected"] = ""
             _session["rate_selected"] = ""
             select_sort = "created_at"
