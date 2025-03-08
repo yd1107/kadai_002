@@ -1,6 +1,7 @@
 {% extends "layout/base.html" %}
 {% load static %}
 {% load humanize %}
+{% load week_filter %}
 {% block title %}NAGOYAMESHI{% endblock %}
 {% block content %}
 <main>
@@ -11,7 +12,7 @@
           <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item"><a href="{% url 'top_page' %}">ホーム</a></li>
             <li class="breadcrumb-item">
-                <a href="{% url 'restaurant_search' %}?keyword=&button_type=keyword">店舗一覧</a>
+                <a href="{% url 'restaurant_search' %}?keyword=&search_type=keyword">店舗一覧</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">店舗詳細</li>
           </ol>
@@ -85,7 +86,7 @@
                                 <span class="fw-bold">営業時間</span>
                               </div>
                                 <div class="col">
-                                  <span>{{ object.business_time }}</span>
+                                  <span>{{ object.open_time }}〜{{ object.close_time }}</span>
                                 </div>
                             </div>
                             <div class="row pb-2 mb-2 border-bottom">
@@ -94,7 +95,7 @@
                               </div>
                               <div class="col d-flex">
                                 <div>
-                                  {{ object.close_day_of_week }}
+                                  {{ object.close_day_of_week | weekday }}
                                 </div>
                               </div>
                             </div>
