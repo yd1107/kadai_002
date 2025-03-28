@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, time
 from operator import attrgetter
 
 from django.db.models import Avg
@@ -312,42 +312,29 @@ class ReservationCreateView(generic.CreateView):
         
         average_rate = models.Review.objects.filter(restaurant=restaurant).aggregate(Avg('rate'))
         average_rate = average_rate['rate__avg'] if average_rate['rate__avg'] is not None else 0
-        average_rate = round(average_rate, 2)
-        if average_rate % 1 == 0:
-            average_rate_star = int(average_rate)
-        else:
-            average_rate_star = round(average_rate * 2) / 2
+        
 
         rate_count = models.Review.objects.filter(restaurant=restaurant).count()
-        close_day_list = self.make_close_list(restaurant.close_day_of_week)
+        close_day_list = [restaurant.close_day_of_week]
 
         context.update({
             'restaurant': restaurant,
             'close_day_list': close_day_list,
             'average_rate': average_rate,
-            'average_rate_star': average_rate_star,
             'rate_count': rate_count,
         })
         return context
 
-    def make_close_list(self, close_day):
-        close_list = []
-        if '月' in close_day:
-            close_list.append(1)
-        if '火' in close_day:
-            close_list.append(2)
-        if '水' in close_day:
-            close_list.append(3)
-        if '木' in close_day:
-            close_list.append(4)
-        if '金' in close_day:
-            close_list.append(5)
-        if '土' in close_day:
-            close_list.append(6)
-        if '日' in close_day:
-            close_list.append(0)
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
 
-        return close_list
+        time_choice = ((time(17, 0), '17:00'),
+                        (time(17, 30), '17:30'),
+                        )
+
+        kwargs["time_choice"] = time_choice
+
+        return kwargs
 
 
 class ReservationListView(generic.ListView):

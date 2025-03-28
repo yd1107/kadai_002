@@ -20,8 +20,8 @@
         </nav>
           <h1 class="mb-2 text-center">{{ restaurant.name }}</h1>
             <p class="text-center">
-              <span class="star-rating me-1" data-rate="{{ average_rate_star }}"></span>
-              {{ average_rate }}（{{ rate_count }}件）
+              <span class="star-rating me-1" data-rate="{{ average_rate | floatformat:0 }}"></span>
+              {{ average_rate | floatformat:1 }}（{{ rate_count }}件）
             </p>
               <ul class="nav nav-tabs mb-3">
                 <li class="nav-item">

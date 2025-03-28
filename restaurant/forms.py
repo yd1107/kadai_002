@@ -2,11 +2,14 @@ from django import forms
 from .models import Reservation, Review
 
 class ReservationCreateForm(forms.ModelForm):
+    time = forms.ChoiceField()
+
     class Meta:
         model = Reservation
         fields = ('date', 'time', 'number_of_people',)
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, time_choice=None, *args, **kwargs):
+        self.base_fields["time"].choices = time_choice
         super().__init__(*args, **kwargs)
 
         self.fields['date'].widget.attrs['class'] = 'form-control'
