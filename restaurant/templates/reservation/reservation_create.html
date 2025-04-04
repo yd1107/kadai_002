@@ -33,7 +33,6 @@
                   </li>
                     <li class="nav-item">
                       <a class="nav-link link-dark"
-                       {# TODO:1#}
                         href="{% url 'review_list' restaurant.id %}">レビュー</a>
                         {# href="{% url 'review_list' restaurant.id %}">レビュー</a>#}
                     </li>
@@ -69,11 +68,10 @@
   {% endblock %}
   {% block js_script %}
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
 <script>
-    const restaurantRegularHolidays = { close_day_list };
-    
+    /*
     flatpickr('#reservation_date', {
         locale: 'ja',
         minDate: 'today',
@@ -84,5 +82,9 @@
             }
         ]
     });
+    */
+
+   flatpickr("#reservation_date")
+
 </script>
 {% endblock %}

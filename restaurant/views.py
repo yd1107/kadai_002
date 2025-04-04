@@ -1,4 +1,4 @@
-from datetime import date, time
+from datetime import date, datetime, timedelta, time
 from operator import attrgetter
 
 from django.db.models import Avg
@@ -328,9 +328,18 @@ class ReservationCreateView(generic.CreateView):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
 
-        time_choice = ((time(17, 0), '17:00'),
-                        (time(17, 30), '17:30'),
-                        )
+        restaurant = models.Restaurant.objects.filter(id=self.kwargs["pk"]).first()
+        
+        reservation_time = datetime.combine(date.today(),restaurant.open_time)
+        close_time = datetime.combine(date.today(), restaurant.close_time)
+        reservation_limit = close_time - timedelta(minutes=60)
+        time_choice = []
+
+        while True:
+            time_choice.append((reservation_time, reservation_time.strftime("%H:%M")))
+            reservation_time = reservation_time + timedelta(minutes=30)
+            if reservation_time > reservation_limit:
+                break
 
         kwargs["time_choice"] = time_choice
 
