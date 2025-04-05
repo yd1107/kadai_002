@@ -336,7 +336,7 @@ class ReservationCreateView(generic.CreateView):
         time_choice = []
 
         while True:
-            time_choice.append((reservation_time, reservation_time.strftime("%H:%M")))
+            time_choice.append((reservation_time.time(), reservation_time.strftime("%H:%M")))
             reservation_time = reservation_time + timedelta(minutes=30)
             if reservation_time > reservation_limit:
                 break

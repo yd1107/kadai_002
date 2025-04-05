@@ -84,7 +84,16 @@
     });
     */
 
-   flatpickr("#reservation_date")
+   flatpickr("#reservation_date", {
+   locale:"ja",
+    minDate: new Date().fp_incr(1),
+    maxDate: new Date().fp_incr(60),
+    disable: [
+      function (date) {
+        return date.getDay() === {{restaurant.close_day_of_week}}
+      }
+      ]
+   })
 
 </script>
 {% endblock %}
