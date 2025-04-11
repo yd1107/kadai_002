@@ -6,9 +6,11 @@ from . import views
 urlpatterns = [
   path("user-detail/<int:pk>/", views.UserDetailView.as_view(), name="user_detail"),
   path("user-update/<int:pk>/", views.UserUpdateView.as_view(), name="user_update"),
+  
   path("subscribe-register/", views.SubscribeRegisterView.as_view(),name="subscribe_register"),
+  path("subscribe-success/", views.SubscribeSuccessView.as_view(),name="subscribe_success"),
   path("subscribe-cancel/", views.SubscribeCancelView.as_view(),name="subscribe_cancel"),
-  path("subscribe-payment/", views.SubscribePaymentView.as_view(),name="subscribe_payment"),
+  
   path("management/user-list",views.ManagementUserListView.as_view(), name="user_list"),
   path("management/user-list-update/<int:pk>/",views.ManagementUserUpdateView.as_view(), name="user_list_update"),
   path("management/user-list-delete/<int:pk>/",views.ManagementUserDeleteView.as_view(), name="user_list_delete"),

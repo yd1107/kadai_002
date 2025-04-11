@@ -1,81 +1,91 @@
-from django.shortcuts import render , redirect
+from django.shortcuts import render , redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic , View
 from django.views.generic.edit import CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http.response import HttpResponse
+import stripe
 
 from . import forms
 from . import models
 from .mixins import onlyMnagementUserMixin
 
+from .models import CustomUser
 from restaurant.models import Category
 from restaurant.models import Restaurant
 from restaurant.models import Sales
+import nagoyameshi.settings as settings
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 # Create your views here.
-class UserDetailView(generic.DetailView):
+class UserDetailView(LoginRequiredMixin, generic.DetailView):
     model = models.CustomUser
     template_name = 'user/user_detail.html'
     
 
-class UserUpdateView(generic.UpdateView):
+class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = models.CustomUser
     template_name = 'user/user_update.html'
     form_class = forms.UserUpdateForm
 
     def get_success_url(self):
-      pk = self.kwargs['pk']
-      return reverse_lazy('user_detail', kwargs={'pk': pk})
+        pk = self.kwargs['pk']
+        return reverse_lazy('user_detail', kwargs={'pk': pk})
 
     def form_valid(self, form):
-      return super().form_valid(form)
+        return super().form_valid(form)
       
     def form_invalid(self, form):
-      return super().form_invalid(form)
+        return super().form_invalid(form)
 
-class SubscribeRegisterView(View):
-    template = 'subscribe/subscribe_register.html'
-    def get(self, request):
-      context = {}
-      return render(self.request, self.template, context)
+class SubscribeRegisterView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        # YOUR_DOMAINが開発環境と本番環境で変わるようにsettings.pyに記述
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[
+                {
+                    'price': 'price_1RCiz2R3SnzpPnG31qWHEGnz',
+                    'quantity': 1,
+                },
+            ],
+            mode='subscription',
+            success_url=f"{settings.YOUR_DOMAIN}/accounts/subscribe-success/?session_id={{CHECKOUT_SESSION_ID}}&user_id={request.user.id}",
+            cancel_url=f"{settings.YOUR_DOMAIN}/accounts/subscribe-register/",
+        )   
+        return redirect(checkout_session.url, code=303)
+    
+    def get(self, request, *args, **kwargs):    
+        return render(request, 'subscribe/subscribe_register.html')
+    
+class SubscribeSuccessView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):    
+        session_id = request.GET.get('session_id')
+        user_id = request.GET.get('user_id')
 
-    def post(self, request):
-        user_id = request.user.id
-        card_name = request.POST.get('card_name')
-        card_number = request.POST.get('card_number')
+        if not session_id or not user_id:
+            return HttpResponse("Invalid request", status=400)
 
-        correct_cord_number = '4242424242424242'
-        if card_number != correct_cord_number:
-            context = {
-                'error_message': 'クレジットカード番号が正しくありません'
-                }
-            return render(self.request, self.template, context)
-        models.CustomUser.objects.filter(id=user_id).update(is_subscribed=True,card_name=card_name,card_number=card_number)
+        # ユーザーの subscription 項目を更新
+        user = get_object_or_404(CustomUser, id=user_id)
+        user.is_subscribed = True
+        user.save()
+        
         return redirect(reverse_lazy('top_page'))
 
-class SubscribeCancelView(generic.TemplateView):
+
+
+
+class SubscribeCancelView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'subscribe/subscribe_cancel.html'
+    
     def post(self, request):
         user_id = request.user.id
         models.CustomUser.objects.filter(id=user_id).update(is_subscribed=False)
-        return redirect(reverse_lazy('top_view'))
-
-class SubscribePaymentView(View):
-    template = 'subscribe/subscribe_payment.html'
-
-    def get(self, request):
-        user_id = request.user.id
-        user = models.CustomUser.objects.get(id=user_id)
-        context = {'user': user}
-        return render(self.request, self.template, context)
-    def post(self, request):
-        user_id = request.user.id
-        card_name = request.POST.get('card_name')
-        card_number = request.POST.get('card_number')
-
-        print(card_name, card_number)
-        models.CustomUser.objects.filter(id=user_id).update(card_name=card_name,card_number=card_number)
         return redirect(reverse_lazy('top_page'))
+
 
 
 #ここから管理者側
