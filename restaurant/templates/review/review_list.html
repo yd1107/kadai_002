@@ -27,13 +27,13 @@
             <ol class="breadcrumb mb-0">
               <li class="breadcrumb-item"><a href="{% url 'top_page' %}">ホーム</a></li>
               <li class="breadcrumb-item"><a href="{% url 'restaurant_search' %}?keyword=&button_type=keyword">店舗一覧</a></li>
-              <li class="breadcrumb-item"><a href="{% url 'restaurant_detail' restaurant.id %}">店舗詳細</a></li>レビュー</li>
-              <li class="breadcrumb-item active" aria-current="page">
+              <li class="breadcrumb-item"><a href="{% url 'restaurant_detail' restaurant.id %}">店舗詳細</a>
+              <li class="breadcrumb-item active" aria-current="page">レビュー</li>
             </ol>
           </nav>
             <h1 class="mb-2 text-center">{{ restaurant.name }}</h1>
-            <p class="text-center"><span class="star-rating me-1" data-rate="{{ average_rate_star }}"></span>
-              {{ average_rate }} （{{ rate_count }}件）
+            <p class="text-center"><span class="star-rating me-1" data-rate="{{ average_rate | floatformat:0}}"></span>
+              {{ average_rate | floatformat:1}} （{{ rate_count }}件）
             </p>
             <ul class="nav nav-tabs mb-3">
               <li class="nav-item">
@@ -46,28 +46,24 @@
                 <a class="nav-link active bg-primary text-white" aria-current="page" href="{% url 'review_list' restaurant.id %}">レビュー</a>
               </li>
             </ul>
-              {% for review in object_list %}
+            {% for review in object_list %}
             <div class="card mb-3">
               <div class="card-header d-flex justify-content-between">
+                <div>{{ review.user.user_name }}</div>
                 <div>
-                  {{ review.user.user_name }}
-                </div>
-                  <div>
-                    {# TODO:1#}
-                    <a href="{% url 'review_update' review.id %}" 
-                      {% if review.user.user_name == user.user_name %}
-                      {# <a href="{% url 'review_update' review.id %}" #}class="me-2">編集  
-                     </a>
+                    {% if review.user.user_name == user.user_name %}
+                    <a href="{% url 'review_update' review.id %}" class="me-2">編集</a>
                     <a href="#" class="link-secondary" data-bs-toggle="modal" data-bs-target="#deleteReviewModal" data-review-id="{{ review.id }}">削除</a>
-                  </div>
-                  {% endif %}
+                    {% endif %}
+                </div>
               </div>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item"><span class="star-rating" data-rate="{{ average_rate }}"></span></li>
-                  <li class="list-group-item">{{ review.comment }}</li>
-                </ul>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><span class="star-rating" data-rate="{{ review.rate | floatformat:0 }}"></span></li>
+                <li class="list-group-item">{{ review.comment }}</li>
+              </ul>
             </div>
-              {% endfor %}
+            {% endfor % %}
+            
               <!-- 有料プランに登録していれば表示する -->
               <!-- ページネーション処理 -->
               {% if is_paginated %}
