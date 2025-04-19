@@ -31,12 +31,11 @@ class Restaurant(models.Model):
     price_min = models.IntegerField(verbose_name="最低金額", default=1000)
     price_max = models.IntegerField(verbose_name="最高金額", default=5000)
     zip_code = models.CharField(verbose_name='郵便番号', max_length=32)
-    address = models.CharField(verbose_name='住所', max_length=128)
-    business_time = models.CharField(verbose_name='営業時間', max_length=64)
+    address = models.CharField(verbose_name='住所', max_length=128)    
     open_time = models.TimeField(verbose_name="開店時間", default="17:00")
     close_time = models.TimeField(verbose_name="閉店時間", default="21:00")
     close_day_of_week = models.PositiveIntegerField(verbose_name='定休日', default=0)
-    seats_number = models.CharField(verbose_name='座席数', max_length=32)
+    seats_number = models.PositiveIntegerField(verbose_name='座席数', default=10)
     category = models.ForeignKey(Category, verbose_name='カテゴリー', on_delete=models.PROTECT)
     photo = models.ImageField(verbose_name='写真', blank=True, null=True)
     created_at = models.DateTimeField(verbose_name='作成日時', auto_now_add=True)
@@ -52,19 +51,13 @@ class Restaurant(models.Model):
         return reverse('restaurant_list')
 
 class Reservation(models.Model):
-    """予約モデル"""   
-    NUMBER_OF_PEOPLE = (
-        ('','選択してください'), (1, '1名'), (2, '2名'), (3, '3名'), (4, '4名'),(5, '5名'), (6, '6名'), (7, '7名'),(8, '8名'), (9, '9名'), (10, '10名'),
-        (11, '11名'), (12, '12名'), (13, '13名'), (14, '14名'), (15, '15名'),(16, '16名'), (17, '17名'), (18, '18名'),(19, '19名'), (20, '20名'),
-        (21, '21名'), (22, '22名'), (23, '23名'), (24, '24名'), (25, '25名'),(26, '26名'), (27, '27名'), (28, '28名'),(29, '29名'), (30, '30名'),(31, '31名'), (32, '32名'), (33, '33名'), (34, '34名'), (35, '35名'),(36, '36名'), (37, '37名'), (38, '38名'),(39, '39名'), (40, '40名'),
-        (41, '41名'), (42, '42名'), (43, '43名'), (44, '44名'), (45, '45名'),(46, '46名'), (47, '47名'), (48, '48名'),(49, '49名'), (50, '50名'),
-        )
+    """予約モデル""" 
 
     user = models.ForeignKey(CustomUser, verbose_name='ユーザー', on_delete=models.PROTECT, null=True, blank=True)
     restaurant = models.ForeignKey(Restaurant, verbose_name='レストラン', on_delete=models.PROTECT)
     date = models.DateField(verbose_name='予約日')
     time = models.TimeField(verbose_name='時間', default='')
-    number_of_people = models.IntegerField(verbose_name='人数',choices=NUMBER_OF_PEOPLE, default='')
+    number_of_people = models.IntegerField(verbose_name='人数', default='')
     created_at = models.DateTimeField(verbose_name='予約申し込み日時',auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name='予約更新日時', auto_now=True)
 

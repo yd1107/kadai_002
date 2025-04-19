@@ -3,13 +3,15 @@ from .models import Reservation, Review
 
 class ReservationCreateForm(forms.ModelForm):
     time = forms.ChoiceField()
+    number_of_people = forms.ChoiceField()
 
     class Meta:
         model = Reservation
         fields = ('date', 'time', 'number_of_people',)
 
-    def __init__(self, time_choice=None, *args, **kwargs):
+    def __init__(self, time_choice=None, number_of_people_choice=None, *args, **kwargs):
         self.base_fields["time"].choices = time_choice
+        self.base_fields["number_of_people"].choices = number_of_people_choice
         super().__init__(*args, **kwargs)
 
         self.fields['date'].widget.attrs['class'] = 'form-control'

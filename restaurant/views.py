@@ -333,6 +333,8 @@ class ReservationCreateView(generic.CreateView):
         reservation_time = datetime.combine(date.today(),restaurant.open_time)
         close_time = datetime.combine(date.today(), restaurant.close_time)
         reservation_limit = close_time - timedelta(minutes=60)
+        
+        #予約時間選択候補生成
         time_choice = []
 
         while True:
@@ -342,7 +344,18 @@ class ReservationCreateView(generic.CreateView):
                 break
 
         kwargs["time_choice"] = time_choice
-
+        
+        #予約人数選択候補生成
+        number_of_people_choice = []
+        seats_number = restaurant.seats_number
+        if seats_number > 50:
+            seats_number =50
+        
+        for number in range(1, seats_number +1):
+            number_of_people_choice.append((number, f"{number}名"))
+        
+        kwargs["number_of_people_choice"] = number_of_people_choice
+        
         return kwargs
 
 
