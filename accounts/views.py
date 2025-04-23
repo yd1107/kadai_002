@@ -39,7 +39,16 @@ class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
       
     def form_invalid(self, form):
         return super().form_invalid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk = self.kwargs['pk']
+        user = get_object_or_404(CustomUser, id=pk)
 
+        context["user"] = user
+
+        return context
+    
 class SubscribeRegisterView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         # YOUR_DOMAINが開発環境と本番環境で変わるようにsettings.pyに記述
@@ -94,6 +103,7 @@ class SubscribeCancelView(LoginRequiredMixin, generic.TemplateView):
 class ManagementUserListView(onlyMnagementUserMixin, generic.ListView):
     template_name = "management/user_list.html"
     model = models.CustomUser
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -136,7 +146,7 @@ class ManagementUserDeleteView(onlyMnagementUserMixin, generic.DeleteView):
 class ManagementCategoryListView(onlyMnagementUserMixin, generic.ListView):
     template_name = "management/category_list.html"
     model = Category
-    paginate_by = 15
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -199,7 +209,7 @@ class ManagementRestaurantCreateView(onlyMnagementUserMixin, generic.CreateView)
 class ManagementRestaurantListView(onlyMnagementUserMixin, generic.ListView):
     template_name = "management/restaurant_manage_list.html"
     model = Restaurant
-    paginate_by = 15
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

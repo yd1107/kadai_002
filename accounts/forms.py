@@ -3,6 +3,46 @@ from django import forms
 from .models import CustomUser
 from restaurant.models import Restaurant
 from restaurant.models import Category
+import datetime
+
+CLOSE_DAYS_OF_WEEK = (
+  (0, "日"),
+  (1, "月"),
+  (2, "火"),
+  (3, "水"),
+  (4, "木"),
+  (5, "金"),
+  (6, "土"),
+)
+
+PRICES = (
+    (1000, "1000円"),
+    (1500, "1500円"),
+    (2000, "2000円"),
+    (2500, "2500円"),
+    (3000, "3000円"),
+    (3500, "3500円"),
+    (4000, "4000円"),
+    (4500, "4500円"),
+    (5000, "5000円"),
+    (5500, "5500円"),
+    (6000, "6000円"),
+    (6500, "6500円"),
+    (7000, "7000円"),
+    (7500, "7500円"),
+    (8000, "8000円"),
+    (8500, "8500円"),
+    (9000, "9000円"),
+)
+
+TIMES = (
+    (datetime.time(17, 0), '17:00'), (datetime.time(17, 30), '17:30'),
+    (datetime.time(18, 0), '18:00'), (datetime.time(18, 30), '18:30'),
+    (datetime.time(19, 0), '19:00'), (datetime.time(19, 30), '19:30'),
+    (datetime.time(20, 0), '20:00'), (datetime.time(20, 30), '20:30'),
+    (datetime.time(21, 0), '21:00'), (datetime.time(21, 30), '21:30'),
+    (datetime.time(22, 0), '22:00'), (datetime.time(22, 30), '22:30'),
+)
 
 class MySignupForm(SignupForm):
     user_name = forms.CharField(max_length=255, label='氏名')
@@ -65,32 +105,37 @@ class UserUpdateForm(forms.ModelForm):
 
 
 class RestaurantUpdateForm(forms.ModelForm):
-
     name = forms.CharField(label='店舗名', max_length=64)
     description = forms.CharField(label='説明', max_length=128)
-    price = forms.CharField(label='価格帯', max_length=32)
+    price_min  = forms.IntegerField(label='価格帯')
+    price_max  = forms.IntegerField(label='')
     zip_code = forms.CharField(label='郵便番号', max_length=32)
     address = forms.CharField(label='住所', max_length=128)
-    business_time = forms.CharField(label='営業時間', max_length=64)
-    close_day_of_week = forms.CharField(label='定休日', max_length=32)
-    seats_number = forms.CharField(label='座席数', max_length=32)
+    open_time = forms.TimeField(label='営業時間')
+    close_time = forms.TimeField(label='')
+    close_day_of_week = forms.IntegerField(label='定休日')
+    seats_number = forms.IntegerField(label='座席数')
     category = forms.ModelChoiceField(label="カテゴリ", queryset=Category.objects.all())
 
     class Meta:
       model = Restaurant
-      fields = ('name', 'description', 'price', 'zip_code', 'address', 'business_time', 'close_day_of_week', 'seats_number', 'category',)
+      fields = ('name', 'description', 'price_min', 'price_max', 
+                'zip_code', 'address', 'open_time','close_time', 
+                'close_day_of_week', 'seats_number', 'category',)
 
     def __init__(self, *args, **kwargs):
       super().__init__(*args, **kwargs)
       self.label_suffix = ""
       self.fields['name'].widget = forms.TextInput(attrs={'placeholder': '店舗名'})
       self.fields['description'].widget = forms.Textarea(attrs={'placeholder': '昔ながらの味をご堪能具ださい。'})
-      self.fields['price'].widget = forms.TextInput(attrs={'placeholder': '2,000円〜3,000円'})
-      self.fields['zip_code'].widget = forms.TextInput(attrs={'placeholder': '1010022'})
+      self.fields['price_min'].widget = forms.Select(choices=PRICES)
+      self.fields['price_max'].widget = forms.Select(choices=PRICES)
+      self.fields['zip_code'].widget = forms.TextInput(attrs={'placeholder': '101-0022'})
       self.fields['address'].widget = forms.TextInput(attrs={'placeholder': '東京都千代田区神田棟堀町300番地'})
-      self.fields['business_time'].widget = forms.TextInput(attrs={'placeholder': '11:00〜23:00'})
-      self.fields['close_day_of_week'].widget = forms.TextInput(attrs={'placeholder': '水'})
-      self.fields['seats_number'].widget = forms.TextInput(attrs={'placeholder': '22席'})
+      self.fields['open_time'].widget = forms.Select(choices=TIMES)
+      self.fields['close_time'].widget = forms.Select(choices=TIMES)
+      self.fields['close_day_of_week'].widget = forms.Select(choices=CLOSE_DAYS_OF_WEEK)
+      self.fields['seats_number'].widget = forms.NumberInput(attrs={'placeholder': '20'})
 
 
 

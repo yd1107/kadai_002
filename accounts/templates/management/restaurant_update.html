@@ -11,12 +11,7 @@
 
       <br>
       <a href="{% url 'restaurant_manage_list' %}">戻る</a>
-
       <input type="submit" class="btn btn-primary" value="更新">
       <button type="button" class="btn btn-danger" onclick="location.href='{% url 'restaurant_delete' pk=del_restaurant_id %}'">削除</button>
-      
-  </form>
-
-
-
+   </form>
 {% endblock %}
