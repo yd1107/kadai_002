@@ -197,8 +197,9 @@ class ManagementCategoryDeleteView(onlyMnagementUserMixin, generic.DeleteView):
 #店舗
 class ManagementRestaurantCreateView(onlyMnagementUserMixin, generic.CreateView):
     model = Restaurant
+    form_class = forms.RestaurantInputForm
     template_name = 'management/restaurant_create.html'
-    fields = '__all__'
+    success_url = reverse_lazy('restaurant_manage_list')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -219,7 +220,7 @@ class ManagementRestaurantListView(onlyMnagementUserMixin, generic.ListView):
 
 class ManagementRestaurantUpdateView(onlyMnagementUserMixin, generic.UpdateView):
     template_name = 'management/restaurant_update.html'
-    form_class = forms.RestaurantUpdateForm
+    form_class = forms.RestaurantInputForm
     model = Restaurant
     success_url = reverse_lazy('restaurant_manage_list')
 

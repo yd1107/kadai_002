@@ -341,6 +341,37 @@ a {
 }
 
 /* 店舗 */
+p:has(.combo-first) {
+  display: inline;
+}
+
+p:has(.combo-last) {
+  display: inline-block;
+}
+
+p:has(.combo-last)::before {
+  white-space: pre-wrap;
+  content: "　　〜　　";
+}
+
+.restaurant-combo {
+  min-width: 100px;
+  text-align: right;
+  padding-right: 5px;
+}
+
+.restaurant-name {
+  width: 300px;
+}
+
+.restaurant-address {
+  width: 600px;
+}
+
+.restaurant-seats {
+  width: 70px;
+}
+
 .restaurant_update {
   margin: 30px auto;
 }
@@ -406,3 +437,6 @@ a {
   display: flex;
   justify-content: left;
 }
+
+
+

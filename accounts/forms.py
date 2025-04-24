@@ -16,23 +16,23 @@ CLOSE_DAYS_OF_WEEK = (
 )
 
 PRICES = (
-    (1000, "1000円"),
-    (1500, "1500円"),
-    (2000, "2000円"),
-    (2500, "2500円"),
-    (3000, "3000円"),
-    (3500, "3500円"),
-    (4000, "4000円"),
-    (4500, "4500円"),
-    (5000, "5000円"),
-    (5500, "5500円"),
-    (6000, "6000円"),
-    (6500, "6500円"),
-    (7000, "7000円"),
-    (7500, "7500円"),
-    (8000, "8000円"),
-    (8500, "8500円"),
-    (9000, "9000円"),
+    (1000, "1,000円"),
+    (1500, "1,500円"),
+    (2000, "2,000円"),
+    (2500, "2,500円"),
+    (3000, "3,000円"),
+    (3500, "3,500円"),
+    (4000, "4,000円"),
+    (4500, "4,500円"),
+    (5000, "5,000円"),
+    (5500, "5,500円"),
+    (6000, "6,000円"),
+    (6500, "6,500円"),
+    (7000, "7,000円"),
+    (7500, "7,500円"),
+    (8000, "8,000円"),
+    (8500, "8,500円"),
+    (9000, "9,000円"),
 )
 
 TIMES = (
@@ -104,7 +104,7 @@ class UserUpdateForm(forms.ModelForm):
 
 
 
-class RestaurantUpdateForm(forms.ModelForm):
+class RestaurantInputForm(forms.ModelForm):
     name = forms.CharField(label='店舗名', max_length=64)
     description = forms.CharField(label='説明', max_length=128)
     price_min  = forms.IntegerField(label='価格帯')
@@ -116,27 +116,29 @@ class RestaurantUpdateForm(forms.ModelForm):
     close_day_of_week = forms.IntegerField(label='定休日')
     seats_number = forms.IntegerField(label='座席数')
     category = forms.ModelChoiceField(label="カテゴリ", queryset=Category.objects.all())
+    photo = forms.ImageField(label='イメージ画像')
 
     class Meta:
       model = Restaurant
       fields = ('name', 'description', 'price_min', 'price_max', 
                 'zip_code', 'address', 'open_time','close_time', 
-                'close_day_of_week', 'seats_number', 'category',)
+                'close_day_of_week', 'seats_number', 'category', 'photo')
 
     def __init__(self, *args, **kwargs):
       super().__init__(*args, **kwargs)
       self.label_suffix = ""
-      self.fields['name'].widget = forms.TextInput(attrs={'placeholder': '店舗名'})
+      self.fields['name'].widget = forms.TextInput(attrs={'placeholder': '店舗名', "class": "restaurant-name"})
       self.fields['description'].widget = forms.Textarea(attrs={'placeholder': '昔ながらの味をご堪能具ださい。'})
-      self.fields['price_min'].widget = forms.Select(choices=PRICES)
-      self.fields['price_max'].widget = forms.Select(choices=PRICES)
+      self.fields['price_min'].widget = forms.Select(choices=PRICES, attrs={'class': "restaurant-combo combo-first"})
+      self.fields['price_max'].widget = forms.Select(choices=PRICES, attrs={'class': "restaurant-combo combo-last"})
       self.fields['zip_code'].widget = forms.TextInput(attrs={'placeholder': '101-0022'})
-      self.fields['address'].widget = forms.TextInput(attrs={'placeholder': '東京都千代田区神田棟堀町300番地'})
-      self.fields['open_time'].widget = forms.Select(choices=TIMES)
-      self.fields['close_time'].widget = forms.Select(choices=TIMES)
+      self.fields['address'].widget = forms.TextInput(attrs={'placeholder': '東京都千代田区神田棟堀町300番地', "class": "restaurant-address"})
+      self.fields['open_time'].widget = forms.Select(choices=TIMES, attrs={'class': "restaurant-combo combo-first"})
+      self.fields['close_time'].widget = forms.Select(choices=TIMES, attrs={'class': "restaurant-combo combo-last"})
       self.fields['close_day_of_week'].widget = forms.Select(choices=CLOSE_DAYS_OF_WEEK)
-      self.fields['seats_number'].widget = forms.NumberInput(attrs={'placeholder': '20'})
-
+      self.fields['seats_number'].widget = forms.NumberInput(attrs={'placeholder': '20', "class": "restaurant-seats"})
+      self.fields['photo'].widget = forms.ClearableFileInput()
+      
 
 
 #カテゴリー
