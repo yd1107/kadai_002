@@ -341,6 +341,12 @@ a {
 }
 
 /* 店舗 */
+.errorlist {
+  color: red;
+  font-weight: bold;
+  font-size: 2em;
+}
+
 p:has(.combo-first) {
   display: inline;
 }

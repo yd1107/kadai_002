@@ -139,7 +139,21 @@ class RestaurantInputForm(forms.ModelForm):
       self.fields['seats_number'].widget = forms.NumberInput(attrs={'placeholder': '20', "class": "restaurant-seats"})
       self.fields['photo'].widget = forms.ClearableFileInput()
       
-
+    def clean(self):
+      min_val = self.cleaned_data.get("price_min")
+      max_val = self.cleaned_data.get("price_max")
+      
+      open_time = self.cleaned_data.get("open_time")
+      close_time = self.cleaned_data.get("close_time")
+      
+      if max_val <= min_val:
+        raise forms.ValidationError("価格上限は下限値より大きな必要があります！")
+      
+      if close_time <= open_time:
+        raise forms.ValidationError("閉店時間は開店時間より遅い必要があります！")
+      
+      
+      return self.cleaned_data
 
 #カテゴリー
 class CategoryCreateForm(forms.ModelForm):

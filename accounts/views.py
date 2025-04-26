@@ -249,6 +249,10 @@ class ManagementRestaurantDeleteView(onlyMnagementUserMixin, generic.DeleteView)
 class ManagementSalesListView(onlyMnagementUserMixin, generic.ListView):
     template_name = 'management/sales.html'
     model = Sales
+    
+    def get_queryset(self):
+        qs = Sales.objects.all().order_by("-year", "month")
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
