@@ -95,10 +95,10 @@ class UserUpdateForm(forms.ModelForm):
       self.label_suffix = ""
       self.fields['user_name'].widget = forms.TextInput(attrs={'placeholder': '侍 太郎'})
       self.fields['hurigana'].widget = forms.TextInput(attrs={'placeholder': 'サムライ タロ'})
-      self.fields['zip_code'].widget = forms.TextInput(attrs={'placeholder': '1010022'})
+      self.fields['zip_code'].widget = forms.TextInput(attrs={'placeholder': '101-0022'})
       self.fields['address'].widget = forms.TextInput(attrs={'placeholder': '東京都千代田区神田棟堀町300番地'})
-      self.fields['phone_number'].widget = forms.TextInput(attrs={'placeholder': '09012345678'})
-      self.fields['birthday'].widget = forms.TextInput(attrs={'placeholder': '19950401'})
+      self.fields['phone_number'].widget = forms.TextInput(attrs={'placeholder': '090-1234-5678'})
+      self.fields['birthday'].widget = forms.DateInput(attrs={"type":"date", "min":"1955-01-01", "max":"2007-12-31"})
       self.fields['job'].widget = forms.TextInput(attrs={'placeholder': 'エンジニア'})
 
 
