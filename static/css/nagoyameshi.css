@@ -444,5 +444,21 @@ p:has(.combo-last)::before {
   justify-content: left;
 }
 
+/* ユーザー登録関連 */
+.signup_top {
+  margin: auto;
+  width: 70%;
+}
 
+.signup label {
+  display: inline-block;
+  min-width: 25%;
+}
 
+.signup input[name="email"] {
+  width: 30%;
+}
+
+.signup input[name="address"] {
+  width: 40%;
+}
