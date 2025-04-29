@@ -1,0 +1,26 @@
+{% extends "account/base.html" %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Verify Your E-mail Address" %}{% endblock %}
+
+{% block body %}
+{% block content %}
+    {% if messages %}
+     <div>
+      <strong>メッセージ</strong>
+      <ul>
+        {% for message in messages %}
+        <li>{{message}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <h1>{% trans "Verify Your E-mail Address" %}</h1>
+
+    <p>{% blocktrans %}
+        確認のためメールを送信いたしました。記載されているリンクをクリックして、登録手続きを完了してください。数分以内にメールが届かない場合は、再度登録を実施してください。
+        {% endblocktrans %}</p>
+
+{% endblock %}
+{% endblock %}
