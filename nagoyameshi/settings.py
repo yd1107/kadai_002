@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-$9473gbn9@-8+nkk#)z7_o5cpkatd7wl9!+j&my&6@bi19wt-_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["127.0.0.1", "herokuapp.com"]
 
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'django.contrib.humanize',
+    "storages",
 ]
 
 NUMBER_GROUPING = 3
@@ -136,11 +137,17 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'media'),
 )
 # メディアファイルの設定
-MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#MEDIA_URL = 'media/'
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# staticファイルの参照先
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# mediaファイル保存先
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -194,3 +201,13 @@ EMAIL_USE_TLS = True
 STRIPE_PUBLIC_KEY = os.environ["STRIPE_PUBLIC_KEY"]
 STRIPE_SECRET_KEY = os.environ["STRIPE_SECRET_KEY"]
 YOUR_DOMAIN = 'http://127.0.0.1:8000'
+
+# アクセスキーID
+AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
+# シークレットアクセスキー
+AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
+# バケット名
+AWS_STORAGE_BUCKET_NAME = 'yuda-nagoyameshi'
+# 保存先URL
+STATIC_URL = 'https://%s.s3.ap-northeast-1.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+AWS_LOCATION = 'static'
