@@ -301,11 +301,25 @@ a {
   font-size: 25px;
 }
 
-
-.manage_list {
+.manage_list, .form-management-user-list {
   width: 80%;
   margin: 30px auto;
  }
+
+ .form-management-user-list {
+  border: #CCCCCC solid 1px;
+  border-radius: 10px;
+  padding: 10px;
+ }
+
+ .form-management-user-list input {
+  margin-right: 5%;
+ }
+ 
+ .form-management-user-list button[type=button] {
+  margin-left: 2%;
+ }
+
  
  .manage_list tbody tr:hover {
    background-color: #F2C9C9 ;

@@ -6,6 +6,7 @@ from restaurant.models import Category
 import datetime
 
 CLOSE_DAYS_OF_WEEK = (
+  (8, "なし"),
   (0, "日"),
   (1, "月"),
   (2, "火"),
@@ -13,6 +14,7 @@ CLOSE_DAYS_OF_WEEK = (
   (4, "木"),
   (5, "金"),
   (6, "土"),
+  (7, "不定休")
 )
 
 PRICES = (

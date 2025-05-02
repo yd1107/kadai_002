@@ -2,6 +2,13 @@
 {% load static %}
 {% block title %}NAGOYAMESHI{% endblock %}
 {% block sub_content %}
+  <form class="form-management-user-list" method="get" action="./category-list">
+    <label for="category-name">カテゴリ名</label>
+    <input type="text" id="category-name" name="category-name" value="{{search_name}}">
+
+    <button type="submit">検索</button>
+    <button type="button" onclick="clearClick()">クリア</button>
+  </form>
 
   <table class="manage_list">
     <thead>
@@ -26,17 +33,23 @@
      
         {# 前へ #}
         {% if page_obj.has_previous %}
-          <a href="?page=1">&laquo; 先頭</a>
-          <a href="?page={{ page_obj.previous_page_number }}">前へ</a>
+          <a href="?category-name={{search_name}}&page=1">&laquo; 先頭</a>
+          <a href="?category-name={{search_name}}&page={{ page_obj.previous_page_number }}">前へ</a>
         {% endif %}
       
         {# 次へ #}
         {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}">次へ</a>
-          <a href="?page={{ page_obj.paginator.num_pages }}">最後 &raquo;</a>
+          <a href="?category-name={{search_name}}&page={{ page_obj.next_page_number }}">次へ</a>
+          <a href="?category-name={{search_name}}&page={{ page_obj.paginator.num_pages }}">最後 &raquo;</a>
         {% endif %}
   </div>
 
+  <script>
+    function clearClick() {
+      document.getElementById("category-name").value = ""
+    }    
+  </script>
 
 {% endblock %}
+
 

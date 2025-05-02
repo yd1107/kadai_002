@@ -4,6 +4,7 @@ from django.views import generic , View
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.response import HttpResponse
+from django.db.models import Q
 import stripe
 
 from . import forms
@@ -104,11 +105,31 @@ class ManagementUserListView(onlyMnagementUserMixin, generic.ListView):
     template_name = "management/user_list.html"
     model = models.CustomUser
     paginate_by = 20
+    user_name = None
+    user_email = None
+
+    def get_queryset(self):
+        self.user_name = self.request.GET.get("user-name")
+        if self.user_name is None:
+            self.user_name = ""
+
+        self.user_email = self.request.GET.get("user-email")
+        if self.user_email is None:
+            self.user_email = ""
+
+        conditions = Q(user_name__contains=self.user_name,
+                       email__contains=self.user_email)
+
+        self.queryset = CustomUser.objects.filter(conditions)
+
+        return super().get_queryset()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["selected"] = "user"
-        
+        context["search_name"] = self.user_name
+        context["search_email"] = self.user_email
+
         return context
 
 
@@ -139,19 +160,30 @@ class ManagementUserDeleteView(onlyMnagementUserMixin, generic.DeleteView):
 
         return context
 
-    
-
 
 #カテゴリー
 class ManagementCategoryListView(onlyMnagementUserMixin, generic.ListView):
     template_name = "management/category_list.html"
     model = Category
     paginate_by = 20
+    category_name = None
+
+    def get_queryset(self):
+        self.category_name = self.request.GET.get("category-name")
+        if self.category_name is None:
+            self.category_name = ""
+
+        conditions = Q(name__contains=self.category_name)
+
+        self.queryset = Category.objects.filter(conditions)
+
+        return super().get_queryset()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["selected"] = "category"
-        
+        context["search_name"] = self.category_name
+
         return context
 
 
@@ -211,12 +243,33 @@ class ManagementRestaurantListView(onlyMnagementUserMixin, generic.ListView):
     template_name = "management/restaurant_manage_list.html"
     model = Restaurant
     paginate_by = 20
+    restaurant_name = None
+    restaurant_address = None
+
+    def get_queryset(self):
+        self.restaurant_name = self.request.GET.get("restaurant-name")
+        if self.restaurant_name is None:
+            self.restaurant_name = ""
+
+        self.restaurant_address = self.request.GET.get("restaurant-address")
+        if self.restaurant_address is None:
+            self.restaurant_address = ""
+
+        conditions = Q(name__contains=self.restaurant_name,
+                       address__contains=self.restaurant_address)
+
+        self.queryset = Restaurant.objects.filter(conditions)
+
+        return super().get_queryset()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["selected"] = "restaurant"
-        
+        context["search_name"] = self.restaurant_name
+        context["search_address"] = self.restaurant_address
+
         return context
+
 
 class ManagementRestaurantUpdateView(onlyMnagementUserMixin, generic.UpdateView):
     template_name = 'management/restaurant_update.html'
@@ -251,7 +304,7 @@ class ManagementSalesListView(onlyMnagementUserMixin, generic.ListView):
     model = Sales
     
     def get_queryset(self):
-        qs = Sales.objects.all().order_by("-year", "month")
+        qs = Sales.objects.all().order_by("-year", "-month")
         return qs
 
     def get_context_data(self, **kwargs):

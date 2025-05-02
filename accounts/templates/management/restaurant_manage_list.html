@@ -2,6 +2,16 @@
 {% load static %}
 {% block title %}店舗一覧{% endblock %}
 {% block sub_content %}
+  <form class="form-management-user-list" method="get" action="./restaurant-manage-list">
+    <label for="restaurant-name">店舗名</label>
+    <input type="text" id="restaurant-name" name="restaurant-name" value="{{search_name}}">
+
+    <label for="restaurant-address">住所</label>
+    <input type="text" id="restaurant-address" name="restaurant-address" value="{{search_address}}">
+
+    <button type="submit">検索</button>
+    <button type="button" onclick="clearClick()">クリア</button>
+  </form>
 
   <table class="manage_list">
     <thead>
@@ -26,19 +36,23 @@
   <div class="paginate">
     {# ページの表示 #}
     {{ page_obj.number }} / {{ page_obj.paginator.num_pages }} ページ
-
         {# 前へ #}
         {% if page_obj.has_previous %}
-          <a href="?page=1">&laquo; 先頭</a>
-          <a href="?page={{ page_obj.previous_page_number }}">前へ</a>
+          <a href="?restaurant-name={{search_name}}&restaurant-address={{search_address}}&page=1">&laquo; 先頭</a>
+          <a href="?restaurant-name={{search_name}}&restaurant-address={{search_address}}&page={{ page_obj.previous_page_number }}">前へ</a>
         {% endif %}
       
         {# 次へ #}
         {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}">次へ</a>
-          <a href="?page={{ page_obj.paginator.num_pages }}">最後 &raquo;</a>
+          <a href="?restaurant-name={{search_name}}&restaurant-address={{search_address}}&page={{ page_obj.next_page_number }}">次へ</a>
+          <a href="?restaurant-name={{search_name}}&restaurant-address={{search_address}}&page={{ page_obj.paginator.num_pages }}">最後 &raquo;</a>
         {% endif %}
   </div>
 
-
+  <script>
+    function clearClick() {
+      document.getElementById("restaurant-name").value = ""
+      document.getElementById("restaurant-address").value = ""
+    }    
+  </script>
 {% endblock %}

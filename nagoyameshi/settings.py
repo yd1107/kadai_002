@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 
+SITE_ID = 1
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +27,7 @@ SECRET_KEY = 'django-insecure-$9473gbn9@-8+nkk#)z7_o5cpkatd7wl9!+j&my&6@bi19wt-_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["127.0.0.1", "herokuapp.com"]
+ALLOWED_HOSTS = ["127.0.0.1", ".herokuapp.com"]
 
 
 # Application definition
@@ -200,7 +201,11 @@ EMAIL_USE_TLS = True
 # STRIPE 追加
 STRIPE_PUBLIC_KEY = os.environ["STRIPE_PUBLIC_KEY"]
 STRIPE_SECRET_KEY = os.environ["STRIPE_SECRET_KEY"]
-YOUR_DOMAIN = 'http://127.0.0.1:8000'
+
+if DEBUG:
+    YOUR_DOMAIN = 'http://127.0.0.1:8000'
+else:
+    YOUR_DOMAIN = "https://yuda-nagoyameshi-0caa0d116e84.herokuapp.com"
 
 # アクセスキーID
 AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]

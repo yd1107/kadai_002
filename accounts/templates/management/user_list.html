@@ -2,6 +2,17 @@
 {% load static %}
 {% block title %}NAGOYAMESHI{% endblock %}
 {% block sub_content %}
+  <form class="form-management-user-list" method="get" action="./user-list">
+    <label for="user-name">氏名</label>
+    <input type="text" id="user-name" name="user-name" value="{{search_name}}">
+
+    <label for="user-email">email</label>
+    <input type="text" id="user-email" name="user-email" value="{{search_email}}">
+
+    <button type="submit">検索</button>
+    <button type="button" onclick="clearClick()">クリア</button>
+  </form>
+
 
   <table class="manage_list">
     <thead>
@@ -17,21 +28,30 @@
             <td>{{ user.user_name }}</td>
         </tr>
       {% endfor %}
+    
     </tbody>
   </table>
   <div class="paginate">
-  {# ページの表示 #}
-  {{ page_obj.number }} / {{ page_obj.paginator.num_pages }} ページ
-  {# 前へ #}
-   {% if page_obj.has_previous %}
-    <a href="?page=1">&laquo; 先頭</a>
-    <a href="?page={{ page_obj.previous_page_number }}">前へ</a>
+    {# ページの表示 #}
+    {{ page_obj.number }} / {{ page_obj.paginator.num_pages }} ページ
+    {# 前へ #}
+    {% if page_obj.has_previous %}
+      <a href="?user-name={{search_name}}&user-email={{search_email}}&page=1">&laquo; 先頭</a>
+      <a href="?user-name={{search_name}}&user-email={{search_email}}&page={{ page_obj.previous_page_number }}">前へ</a>
     {% endif %}
-  {# 次へ #}
+          
+    {# 次へ #}
     {% if page_obj.has_next %}
-      <a href="?page={{ page_obj.next_page_number }}">次へ</a>
-      <a href="?page={{ page_obj.paginator.num_pages }}">最後 &raquo;</a>
+      <a href="?user-name={{search_name}}&user-email={{search_email}}&page={{ page_obj.next_page_number }}">次へ</a>
+      <a href="?user-name={{search_name}}&user-email={{search_email}}&page={{ page_obj.paginator.num_pages }}">最後 &raquo;</a>
     {% endif %}
   </div>
-  
+
+  <script>
+    function clearClick() {
+      document.getElementById("user-name").value = ""
+      document.getElementById("user-email").value = ""
+    }    
+  </script>
+
 {% endblock %}
