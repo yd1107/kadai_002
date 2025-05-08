@@ -70,31 +70,135 @@ class SubscribeRegisterView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):    
         return render(request, 'subscribe/subscribe_register.html')
     
-class SubscribeSuccessView(LoginRequiredMixin, View):
-    def get(self, request, *args, **kwargs):    
-        session_id = request.GET.get('session_id')
-        user_id = request.GET.get('user_id')
-
-        if not session_id or not user_id:
-            return HttpResponse("Invalid request", status=400)
-
-        # ユーザーの subscription 項目を更新
-        user = get_object_or_404(CustomUser, id=user_id)
-        user.is_subscribed = True
-        user.save()
         
+
+class SubscribeSuccessView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        user_id = request.GET.get('user_id')
+        user = get_object_or_404(CustomUser, id=user_id)
+
+        session_id = request.GET.get('session_id')
+
+        if session_id != "":        # 新規登録
+            if not session_id or not user_id:
+                return HttpResponse("Invalid request", status=400)
+
+            # ユーザーの subscription 項目を更新
+            session = stripe.checkout.Session.retrieve(
+                session_id,
+                expand=['subscription']
+            )
+
+            customer_id = session.customer  # 顧客ID
+            subscription_id = session.subscription.id  # サブスクリプションID
+
+            # サブスクリプションからデフォルトの支払い方法を取得
+            subscription = stripe.Subscription.retrieve(subscription_id, expand=['default_payment_method'])
+            payment_method = subscription.default_payment_method
+
+        else:                       # 編集
+            customer_id = user.stripe_customer_id
+            subscription_id = user.stripe_subscription_id
+
+            customer = stripe.Customer.retrieve(
+                customer_id,
+                expand=["invoice_settings.default_payment_method"]
+            )
+
+            payment_method = customer.invoice_settings.default_payment_method
+
+            if payment_method is None:
+                payment_methods = stripe.PaymentMethod.list(customer=customer_id, type="card")
+                payment_method = payment_methods.data[0]
+
+        # カード情報の取得
+        if payment_method and payment_method['card']:
+            card = payment_method['card']
+            last4 = card['last4']
+            brand = card['brand']
+            exp_month = card['exp_month']
+            exp_year = card['exp_year']
+
+            user.is_subscribed = True
+            user.stripe_customer_id = customer_id
+            user.stripe_subscription_id = subscription_id
+        else:
+            last4 = ""
+            brand = ""
+            exp_month = 0
+            exp_year = 0
+
+            user.is_subscribed = False
+            user.stripe_customer_id = ""
+            user.stripe_subscription_id = ""
+
+        user.stripe_card_last4 = last4
+        user.stripe_card_brand = brand
+        user.stripe_card_exp_month = exp_month
+        user.stripe_card_exp_year = exp_year
+
+        user.save()
+
         return redirect(reverse_lazy('top_page'))
 
 
+class SubscribeEditView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'subscribe/subscribe_edit.html'
+
+    def post(self, request):
+        user_id = request.user.id
+        user = get_object_or_404(CustomUser, id=user_id)
+
+        # セッション作成
+        session = stripe.billing_portal.Session.create(
+            customer=user.stripe_customer_id,
+            return_url=f"{settings.YOUR_DOMAIN}/accounts/subscribe-success/?session_id=&user_id={request.user.id}",
+        )
+
+        return redirect(session.url)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        user_id = self.request.user.id
+        user = get_object_or_404(CustomUser, id=user_id)
+
+        context["user"] = user
+
+        return context
 
 
 class SubscribeCancelView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'subscribe/subscribe_cancel.html'
-    
+
     def post(self, request):
         user_id = request.user.id
-        models.CustomUser.objects.filter(id=user_id).update(is_subscribed=False)
+        user = get_object_or_404(CustomUser, id=user_id)
+
+        stripe.Subscription.delete(user.stripe_subscription_id)
+        user.is_subscribed = False
+        user.stripe_customer_id = ""
+        user.stripe_subscription_id = ""
+        user.stripe_card_last4 = ""
+        user.stripe_card_brand = ""
+        user.stripe_card_exp_month = 0
+        user.stripe_card_exp_year = 0
+
+        user.save()
+
         return redirect(reverse_lazy('top_page'))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        user_id = self.request.user.id
+        user = get_object_or_404(CustomUser, id=user_id)
+
+        context["user"] = user 
+
+        return context
+
+
 
 
 

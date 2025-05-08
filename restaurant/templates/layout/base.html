@@ -12,7 +12,6 @@
       <!-- css -->
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
       <link href="{% static 'css/nagoyameshi.css' %}" rel="stylesheet">
-
     {% block stylesheet %}
     {% endblock %}
   </head>
@@ -23,7 +22,7 @@
         <div class="container nagoyameshi-container">
           <a class="navbar-brand app-name" href="{% url 'top_page' %}">
             <div class="d-flex align-items-center">
-            <img class="nagoyameshi-logo me-1" src="{% static 'images/logo/logo.png' %}" alt="nagoyameshi">NAGOYAMESHI</div>
+              <img class="nagoyameshi-logo me-1" src="{% static 'images/logo/logo.png' %}" alt="nagoyameshi">NAGOYAMESHI</div>
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
                   aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +42,8 @@
                     <a class="dropdown-item" href="{% url 'user_detail' user.id %}">会員情報</a>
                     <a class="dropdown-item" href="{% url 'reservation_list' %}">予約一覧</a>
                     <a class="dropdown-item" href="{% url 'favorite_list' %}">お気に入り一覧</a>
-                    <a class="dropdown-item" href="{% url 'subscribe_cancel' %}">有料プラン解約</a>
+                    <a class="dropdown-item" href="{% url 'subscribe_edit' %}">有料プラン編集</a>
+                    <a class="dropdown-item" href="{% url 'subscribe_cancel' %}">有料プラン即時解約</a>
 
                       {% if user.is_staff %}
                         <a class ="dropdown-item"  href="{% url 'user_list' %}">サイト管理</a>
@@ -104,6 +104,4 @@
         {% endblock %}
   </body>
 </html>
-
-
 
